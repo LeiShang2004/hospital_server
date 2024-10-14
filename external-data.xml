@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <object-set>
+    <table path="hospital.appointment">
+      <table path="hospital.doctor" name="虚拟外键_ap1" from="doctor_id" to="doctor_id"/>
+      <table path="hospital.patient" name="虚拟外键_ap3" from="patient_id" to="patient_id"/>
+      <table path="hospital.user" name="虚拟外键_ap2" from="user_id" to="user_id"/>
+    </table>
+    <table path="hospital.doctor">
+      <table path="hospital.department" name="虚拟外键_do1" from="department_id" to="department_id"/>
+      <table path="hospital.specialization" name="虚拟外键_do2" from="specialization_id" to="specialization_id"/>
+      <table path="hospital.title" name="虚拟外键_do3" from="title_id" to="title_id"/>
+    </table>
+    <table path="hospital.specialization">
+      <table path="hospital.department" name="虚拟外键_sp1" from="department_id" to="department_id"/>
+    </table>
+  </object-set>
+</data>
