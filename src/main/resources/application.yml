@@ -1,0 +1,40 @@
+server:
+  # 应用服务 WEB 访问端口
+  port: 8081
+
+spring:
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hospital
+    username: root
+    password: 123456
+
+  servlet:
+    #文件上传配置
+    multipart:
+      #单个文件最大大小
+      max-file-size: 10MB
+      #总上传文件最大大小
+      max-request-size: 100MB
+
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+mybatis:
+  configuration:
+    #日志输出到控制台 ！！！！！！！！
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+  #指定Mybatis的Mapper文件
+  mapper-locations: classpath:mapper/*.xml
+
+redis:
+    # 过期时间 24小时
+    expiration: 86400
