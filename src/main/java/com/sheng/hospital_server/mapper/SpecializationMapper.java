@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface SpecializationMapper {
     @Insert("insert into specialization(name) values(#{specialization.name})")
-    void insert(Specialization specialization);
+    void add(Specialization specialization);
 
     @Delete("delete from specialization where specialization_id=#{id}")
     void delete(Integer id);

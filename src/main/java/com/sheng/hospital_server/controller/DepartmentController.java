@@ -22,7 +22,7 @@ public class DepartmentController {
 
     @PutMapping
     public CommonResponse<Department> add(@RequestBody Department department) {
-        log.info("科室：添加科室");
+        log.info("科室：添加科室{}", department);
         departmentService.add(department);
         return CommonResponse.createForSuccess();
     }

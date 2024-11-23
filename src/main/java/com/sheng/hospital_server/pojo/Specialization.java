@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class Specialization {
     private Integer specializationId;
     private String name;
+    private Integer departmentId;
 }

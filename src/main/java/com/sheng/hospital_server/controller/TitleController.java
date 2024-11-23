@@ -22,7 +22,7 @@ public class TitleController {
 
     @PutMapping
     public CommonResponse<Title> add(@RequestBody Title title) {
-        log.info("职称：添加职称");
+        log.info("职称：添加职称{}", title);
         titleService.add(title);
         return CommonResponse.createForSuccess();
     }

@@ -8,6 +8,8 @@ public enum ResponseCode {
     SUCCESS(0, "SUCCESS"),
     // 错误
     ERROR(1, "ERROR"),
+    // 用户名或密码错误
+    USERNAME_OR_PASSWORD_ERROR(2, "USERNAME_OR_PASSWORD_ERROR"),
     // 参数不合法
     ARGUMENT_ILLEGAL(10, "ARGUMENT_ILLEGAL"),
     // 需要登录

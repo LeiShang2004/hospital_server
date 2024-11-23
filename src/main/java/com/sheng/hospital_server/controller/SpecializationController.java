@@ -22,7 +22,7 @@ public class SpecializationController {
 
     @PutMapping
     public CommonResponse<Specialization> add(@RequestBody Specialization specialization) {
-        log.info("专业：添加专业");
+        log.info("专业：添加专业{}", specialization);
         specializationService.add(specialization);
         return CommonResponse.createForSuccess();
     }

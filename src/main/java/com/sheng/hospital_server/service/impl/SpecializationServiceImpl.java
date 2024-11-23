@@ -15,7 +15,7 @@ public class SpecializationServiceImpl implements SpecializationService {
 
     @Override
     public void add(Specialization specialization) {
-        specializationMapper.insert(specialization);
+        specializationMapper.add(specialization);
     }
 
     @Override
