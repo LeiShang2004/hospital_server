@@ -1,25 +1,62 @@
 package com.sheng.hospital_server.service;
 
-import com.sheng.hospital_server.pojo.Department;
-
-import java.util.List;
 
 public interface RedisService {
-    /* department相关*/
 
+    /* department相关 */
     /**
-     * 获取Redis中科室信息的key
+     * 获取Redis中department的key
      *
      * @param departmentId 科室id
      * @return key redis中的key
      */
-    public static String getDepartmentKey(Integer departmentId) {
+    static String getDepartmentKey(Integer departmentId) {
         return "departmentId:" + departmentId;
     }
 
-    public boolean isDepartmentsLoaded(Integer departmentId);
+    Boolean isDepartmentsLoaded(Integer departmentId);
 
-    public void loadDepartments();
+    void loadDepartments();
 
-    public String getDepartmentName(Integer departmentId);
+    String getDepartmentName(Integer departmentId);
+
+
+    /* specialization相关 */
+    /**
+     * 获取Redis中specialization的key
+     *
+     * @param specializationId 专业id
+     * @return key redis中的key
+     */
+    static String getSpecializationKey(Integer specializationId) {
+        return "specializationId:" + specializationId;
+    }
+
+    Boolean isSpecializationsLoaded(Integer specializationId);
+
+    void loadSpecializations();
+
+    String getSpecializationName(Integer specializationId);
+
+
+    /* title相关 */
+    /**
+     * 获取Redis中title的key
+     *
+     * @param titleId 职称id
+     * @return key redis中的key
+     */
+    static String getTitleKey(Integer titleId) {
+        return "titleId:" + titleId;
+    }
+
+    Boolean isTitlesLoaded(Integer titleId);
+
+    void loadTitles(Integer titleId);
+
+    String getTitleName(Integer titleId);
+
+    String getTitleFee(Integer titleId);
+
+
 }

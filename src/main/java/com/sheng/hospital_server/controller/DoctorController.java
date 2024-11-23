@@ -22,21 +22,25 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     public CommonResponse<Doctor> getById(@PathVariable Integer id) {
+        log.info("医生：查找id为{}的医生", id);
         return CommonResponse.createForSuccess(doctorService.getById(id));
     }
 
     @GetMapping("/specialization/{specialization_id}")
     public CommonResponse<List<Doctor>> getBySpecializationId(@PathVariable Integer specialization_id) {
+        log.info("医生：查找专业（specialization）id为{}的医生", specialization_id);
         return CommonResponse.createForSuccess(doctorService.getBySpecializationId(specialization_id));
     }
 
     @GetMapping("/department/{department_id}")
     public CommonResponse<List<Doctor>> getByDepartmentId(@PathVariable Integer department_id) {
+        log.info("医生：查找科室（department）id为{}的医生", department_id);
         return CommonResponse.createForSuccess(doctorService.getByDepartmentId(department_id));
     }
 
     @GetMapping("/all")
     public CommonResponse<List<Doctor>> getAll() {
+        log.info("医生：查找所有医生");
         return CommonResponse.createForSuccess(doctorService.getAll());
     }
 

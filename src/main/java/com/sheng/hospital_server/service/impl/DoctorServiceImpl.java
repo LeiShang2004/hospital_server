@@ -64,6 +64,8 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void complete(Doctor doctor) {
         doctor.setDepartmentName(redisService.getDepartmentName(doctor.getDepartmentId()));
-        // Todo: 补全其他信息
+        doctor.setSpecializationName(redisService.getSpecializationName(doctor.getSpecializationId()));
+        doctor.setTitleName(redisService.getTitleName(doctor.getTitleId()));
+        doctor.setTitleFee(redisService.getTitleFee(doctor.getTitleId()));
     }
 }

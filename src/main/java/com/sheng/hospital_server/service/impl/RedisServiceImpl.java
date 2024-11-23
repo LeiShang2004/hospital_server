@@ -1,7 +1,11 @@
 package com.sheng.hospital_server.service.impl;
 
 import com.sheng.hospital_server.mapper.DepartmentMapper;
+import com.sheng.hospital_server.mapper.SpecializationMapper;
+import com.sheng.hospital_server.mapper.TitleMapper;
 import com.sheng.hospital_server.pojo.Department;
+import com.sheng.hospital_server.pojo.Specialization;
+import com.sheng.hospital_server.pojo.Title;
 import com.sheng.hospital_server.service.RedisService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,11 +31,17 @@ public class RedisServiceImpl implements RedisService {
     @Resource
     private DepartmentMapper departmentMapper;
 
+    @Resource
+    private SpecializationMapper specializationMapper;
+
+    @Resource
+    private TitleMapper titleMapper;
+
     // redis过期时间
     @Value("${redis.expiration}")
     private long expiration;
 
-    /* department相关*/
+    /* department相关 k-v*/
 
     /**
      * 判断Redis中是否已经加载了某个科室信息
@@ -39,7 +50,7 @@ public class RedisServiceImpl implements RedisService {
      * @return 是否已加载
      */
     @Override
-    public boolean isDepartmentsLoaded(Integer departmentId) {
+    public Boolean isDepartmentsLoaded(Integer departmentId) {
         return Boolean.TRUE.equals(stringRedisTemplate.hasKey(RedisService.getDepartmentKey(departmentId)));
     }
 
@@ -73,4 +84,70 @@ public class RedisServiceImpl implements RedisService {
         }
         return stringRedisTemplate.opsForValue().get(RedisService.getDepartmentKey(departmentId));
     }
+
+
+    /* specialization相关 k-v*/
+    @Override
+    public Boolean isSpecializationsLoaded(Integer specializationId) {
+        return Boolean.TRUE.equals(stringRedisTemplate.hasKey(RedisService.getSpecializationKey(specializationId)));
+    }
+
+    @Override
+    public void loadSpecializations() {
+        List<Specialization> specializations = specializationMapper.getAll();
+        for (Specialization specialization : specializations) {
+            stringRedisTemplate.opsForValue().set(RedisService.getSpecializationKey(specialization.getSpecializationId()), specialization.getName(), expiration, TimeUnit.MILLISECONDS);
+        }
+
+    }
+
+    @Override
+    public String getSpecializationName(Integer specializationId) {
+        // 如果没有信息，先加载
+        if (!isSpecializationsLoaded(specializationId)) {
+            log.info("Redis：没有specialization信息，正在加载...");
+            loadSpecializations();
+        }
+        return stringRedisTemplate.opsForValue().get(RedisService.getSpecializationKey(specializationId));
+    }
+
+    /* title相关 k-map*/
+    @Override
+    public Boolean isTitlesLoaded(Integer titleId) {
+        return Boolean.TRUE.equals(stringRedisTemplate.hasKey(RedisService.getTitleKey(titleId)));
+    }
+
+    @Override
+    public void loadTitles(Integer titleId) {
+        List<Title> titles = titleMapper.getAll();
+        for (Title title : titles) {
+            // redis数据类型 hset
+            stringRedisTemplate.opsForHash().put(RedisService.getTitleKey(title.getTitleId()), "name", title.getName());
+            stringRedisTemplate.opsForHash().put(RedisService.getTitleKey(title.getTitleId()), "fee", title.getFee().toString());
+            // 设置过期时间
+            stringRedisTemplate.expire(RedisService.getTitleKey(title.getTitleId()), expiration, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    @Override
+    public String getTitleName(Integer titleId) {
+        // 如果没有信息，先加载
+        if (!isTitlesLoaded(titleId)) {
+            log.info("Redis：没有title信息，正在加载...");
+            loadTitles(titleId);
+        }
+        return Objects.requireNonNull(stringRedisTemplate.opsForHash().get(RedisService.getTitleKey(titleId), "name")).toString();
+    }
+
+    @Override
+    public String getTitleFee(Integer titleId) {
+        // 如果没有信息，先加载
+        if (!isTitlesLoaded(titleId)) {
+            log.info("Redis：没有title信息，正在加载...");
+            loadTitles(titleId);
+        }
+        return Objects.requireNonNull(stringRedisTemplate.opsForHash().get(RedisService.getTitleKey(titleId), "fee")).toString();
+    }
+
+
 }

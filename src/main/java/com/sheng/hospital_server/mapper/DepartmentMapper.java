@@ -1,19 +1,24 @@
 package com.sheng.hospital_server.mapper;
 
 import com.sheng.hospital_server.pojo.Department;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface DepartmentMapper {
     @Select("select * from department")
-    public List<Department> getAll();
+    List<Department> getAll();
 
     @Select("select * from department where department_id = #{id}")
-    public Department getById(Integer id);
+    Department getById(Integer id);
 
-    @Select("select * from department where name = #{name}")
-    public Department getByName(String name);
+    @Insert("insert into department(name) values(#{department.name})")
+    void add(Department department);
+
+    @Delete("delete from department where department_id = #{department.departmentId}")
+    void delete(Integer id);
+
+    @Update("update department set name = #{department.name} where department_id = #{department.departmentId}")
+    void update(Department department);
 }
