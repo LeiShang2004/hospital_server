@@ -36,5 +36,11 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 redis:
-    # 过期时间 24小时
-    expiration: 86400
+  # 过期时间 24小时
+  expiration: 86400
+
+# 注入需要改为非静态方法
+#jwt:
+#  secretKey: sheng
+#  # 过期时间 10天
+#  expire: 864000

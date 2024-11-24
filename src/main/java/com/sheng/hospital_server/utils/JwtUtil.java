@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecureDigestAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -13,16 +13,19 @@ import java.util.Map;
 
 public class JwtUtil {
     // 密钥
-    @Value("${jwt.secretKey}")
-    private static String SECRET_KEY;
+//    @Value("${jwt.secretKey}")
+    private static final byte[] SECRET_KEY = KeyGeneratorUtil.generate256BitKey();
     // 过期时间
-    @Value("${jwt.expire}")
-    private static Long EXPIRE;
+//    @Value("${jwt.expire}")
+    private static final Long EXPIRE = 1000 * 60 * 60 * 24L;
 
+    private JwtUtil() {
+    }
 
     /**
      * 生成jwt
      * 使用HS256算法，私钥使用固定密钥
+     *
      * @param claims 设置的信息
      * @return jwt令牌
      */
@@ -33,7 +36,10 @@ public class JwtUtil {
         long expMillis = System.currentTimeMillis() + EXPIRE;
         Date exp = new Date(expMillis);
         //密钥实例
-        SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        SecretKey key = null;
+        if (SECRET_KEY != null) {
+            key = Keys.hmacShaKeyFor(SECRET_KEY);
+        }
 
         return Jwts.builder()
                 //设置签名使用的签名算法和签名使用的秘钥
@@ -47,12 +53,16 @@ public class JwtUtil {
 
     /**
      * 解析jwt
+     *
      * @param jwt jwt令牌
      * @return jwt的负载
      */
-    public static Jws<Claims> parseJWT(String jwt){
+    public static Jws<Claims> parseJWT(String jwt) {
         //密钥实例
-        SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        SecretKey key = null;
+        if (SECRET_KEY != null) {
+            key = Keys.hmacShaKeyFor(SECRET_KEY);
+        }
 
         return Jwts.parser()
                 .verifyWith(key)
