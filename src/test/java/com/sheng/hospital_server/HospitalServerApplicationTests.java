@@ -6,6 +6,7 @@ import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 import com.aliyun.oss.model.GetObjectRequest;
+import com.sheng.hospital_server.utils.RSAUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -76,6 +77,14 @@ class HospitalServerApplicationTests {
 //                    + "such as not being able to access the network.");
 //            System.out.println("Error Message:" + ce.getMessage());
 //        }
-   }
+    }
+
+    @Test
+    void rsaTest() {
+        String encrypt = RSAUtil.encrypt("152555202411248888");
+        System.out.println(encrypt);
+        String decrypt = RSAUtil.decrypt(encrypt);
+        System.out.println(decrypt);
+    }
 
 }

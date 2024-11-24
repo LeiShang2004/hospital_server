@@ -39,6 +39,10 @@ redis:
   # 过期时间 24小时
   expiration: 86400
 
+rsa:
+  # 公钥和私钥的文件路径
+  public-Key-filepath: rsa/public_key.der
+  private-key-filepath: rsa/private_key.der
 # 注入需要改为非静态方法
 #jwt:
 #  secretKey: sheng
