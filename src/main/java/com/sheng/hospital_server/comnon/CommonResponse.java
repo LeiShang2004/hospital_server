@@ -22,6 +22,12 @@ public class CommonResponse<T> {
         this.data = data;
     }
 
+    protected CommonResponse(ResponseCode responseCode, T data) {
+        this.code = responseCode.getCode();
+        this.message = responseCode.getDescription();
+        this.data = data;
+    }
+
     //这个不需要序列化
     @JsonIgnore
     //用于判断成功与否
@@ -31,17 +37,22 @@ public class CommonResponse<T> {
 
     //请求成功，无数据返回
     public static <T> CommonResponse<T> createForSuccess() {
-        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDescription(), null);
+        return new CommonResponse<>(ResponseCode.SUCCESS, null);
     }
 
     //请求成功，并返回响应数据
     public static <T> CommonResponse<T> createForSuccess(T data) {
-        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDescription(), data);
+        return new CommonResponse<>(ResponseCode.SUCCESS, data);
     }
 
     //请求错误，默认错误信息
     public static <T> CommonResponse<T> createForError() {
-        return new CommonResponse<>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDescription(), null);
+        return new CommonResponse<>(ResponseCode.ERROR, null);
+    }
+
+    //请求错误，返回ResponseCode的错误信息
+    public static <T> CommonResponse<T> createForError(ResponseCode responseCode) {
+        return new CommonResponse<>(ResponseCode.ERROR, null);
     }
 
     //请求错误，指定错误信息

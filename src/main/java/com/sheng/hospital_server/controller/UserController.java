@@ -49,6 +49,7 @@ public class UserController {
     @GetMapping("/{id}")
     public CommonResponse<User> getById(@PathVariable Integer id) {
         log.info("用户：查找id为{}的用户", id);
+        System.out.println(StpUtil.getTokenTimeout());
         return CommonResponse.createForSuccess(userService.getById(id));
     }
 

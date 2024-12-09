@@ -33,7 +33,6 @@ public class PermissionLoader implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        // 本 list 仅做模拟，实际项目中要根据具体业务逻辑来查询角色
         List<String> list = new ArrayList<String>();
         list.add("user");
         if (String.valueOf(loginId).startsWith("a")) {

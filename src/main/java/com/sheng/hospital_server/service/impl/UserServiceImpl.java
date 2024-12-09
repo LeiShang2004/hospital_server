@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Integer id) {
         User user = userMapper.getById(id);
+        if (user == null) {
+            return null;
+        }
         user.setPassword(null);
         return user;
     }
