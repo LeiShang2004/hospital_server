@@ -68,4 +68,9 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setTitleName(redisService.getTitleName(doctor.getTitleId()));
         doctor.setTitleFee(redisService.getTitleFee(doctor.getTitleId()));
     }
+
+    @Override
+    public Boolean existsById(Integer id) {
+        return doctorMapper.existsById(id);
+    }
 }

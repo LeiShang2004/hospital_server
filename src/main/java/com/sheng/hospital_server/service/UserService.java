@@ -12,5 +12,7 @@ public interface UserService {
 
     User getById(Integer id);
 
-    String login(User user);
+    Integer login(User user);
+
+    Boolean existsById(Integer id);
 }

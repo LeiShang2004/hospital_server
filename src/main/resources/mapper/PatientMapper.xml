@@ -10,7 +10,7 @@
                 #{cleartextId}, #{plaintextId}, #{hashedId})
     </insert>
 
-    <update id="update">
+    <update id="update" parameterType="com.sheng.hospital_server.pojo.Patient">
         update patient
         set name         = #{name},
             gender       = #{gender},

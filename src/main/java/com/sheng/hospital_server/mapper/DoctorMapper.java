@@ -19,4 +19,7 @@ public interface DoctorMapper {
 
     @Select("select * from doctor")
     List<Doctor> getAll();
+
+    @Select("select exists(select 1 from doctor where doctor_id = #{id})")
+    Boolean existsById(Integer id);
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sheng.hospital_server.mapper.AppointmentMapper">
+
+    <insert id="add" parameterType="com.sheng.hospital_server.pojo.Appointment">
+        insert into appointment(patient_id, doctor_id, user_id, appointment_date, appointment_time, status, information)
+        values (#{patientId}, #{doctorId}, #{userId}, #{appointmentDate}, #{appointmentTime}, #{status}, #{information})
+    </insert>
+
+    <sql id="commonSelect">
+        SELECT a.appointment_id,
+               a.patient_id,
+               a.doctor_id,
+               a.user_id,
+               a.appointment_date,
+               a.appointment_time,
+               a.status,
+               a.information,
+               (SELECT CONCAT(
+                               DATE_FORMAT(tb.start_time, '%H:%i'),
+                               ' - ',
+                               DATE_FORMAT(tb.end_time, '%H:%i')
+                       ) AS appointment_time_info
+                FROM time_bucket tb
+                WHERE tb.bucket_id = a.appointment_time) AS appointment_time_info
+        FROM appointment a
+    </sql>
+
+    <!-- 公共部分 -->
+    <update id="update" parameterType="com.sheng.hospital_server.pojo.Appointment">
+        update appointment
+        set patient_id       = #{patientId},
+            doctor_id        = #{doctorId},
+            user_id          = #{userId},
+            appointment_date = #{appointmentDate},
+            appointment_time = #{appointmentTime},
+            status           = #{status},
+            information      = #{information}
+        where appointment_id = #{appointmentId}
+    </update>
+
+    <select id="getById" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
+        <include refid="commonSelect"/>
+        WHERE a.appointment_id = #{appointmentId}
+    </select>
+
+
+    <select id="getByUserId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
+        <include refid="commonSelect"/>
+        WHERE a.user_id = #{userId}
+    </select>
+
+    <select id="getByPatientId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
+        <include refid="commonSelect"/>
+        WHERE a.patient_id = #{patientId}
+    </select>
+
+    <select id="getByDoctorId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
+        <include refid="commonSelect"/>
+        WHERE a.doctor_id = #{doctorId}
+    </select>
+
+</mapper>
+

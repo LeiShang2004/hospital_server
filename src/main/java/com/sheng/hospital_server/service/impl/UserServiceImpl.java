@@ -3,12 +3,8 @@ package com.sheng.hospital_server.service.impl;
 import com.sheng.hospital_server.mapper.UserMapper;
 import com.sheng.hospital_server.pojo.User;
 import com.sheng.hospital_server.service.UserService;
-import com.sheng.hospital_server.utils.JwtUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,20 +35,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(User user) {
+    public Integer login(User user) {
         User logined = userMapper.login(user);
         if (logined == null) {
             return null;
         } else {
-            // TODO 密码加密解密
+//            //要向jwt中封装的信息
+//            Map<String, Object> claims = new HashMap<>();
+//            claims.put("id", logined.getUserId());
+//            claims.put("is_admin", false);
+//
+//            // 生成JWT令牌
+//            return JwtUtil.generateJwt(claims);
 
-            //要向jwt中封装的信息
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("id", logined.getUserId());
-            claims.put("is_admin", false);
-
-            // 生成JWT令牌
-            return JwtUtil.generateJwt(claims);
+            // 弃用jwt 改用sa token
+            return logined.getUserId();
         }
+    }
+
+    @Override
+    public Boolean existsById(Integer id) {
+        return userMapper.existsById(id);
     }
 }

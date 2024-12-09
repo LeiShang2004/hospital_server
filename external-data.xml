@@ -4,6 +4,7 @@
     <table path="hospital.appointment">
       <table path="hospital.doctor" name="虚拟外键_ap1" from="doctor_id" to="doctor_id"/>
       <table path="hospital.patient" name="虚拟外键_ap3" from="patient_id" to="patient_id"/>
+      <table path="hospital.time_bucket" name="虚拟外键_ap4" from="appointment_time" to="bucket_id"/>
       <table path="hospital.user" name="虚拟外键_ap2" from="user_id" to="user_id"/>
     </table>
     <table path="hospital.doctor">

@@ -19,4 +19,7 @@ public interface PatientMapper {
     @Select("select * from patient where patient_id = #{patientId}")
     Patient getById(Integer patientId);
 //    List<Patient> getByUserId();
+
+    @Select("select exists(select 1 from patient where patient_id = #{patientId})")
+    Boolean existsById(Integer patientId);
 }

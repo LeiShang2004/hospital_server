@@ -1,5 +1,7 @@
 package com.sheng.hospital_server.controller;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.comnon.ResponseCode;
 import com.sheng.hospital_server.pojo.User;
@@ -46,14 +48,24 @@ public class UserController {
         return CommonResponse.createForSuccess(userService.getById(id));
     }
 
+//    @GetMapping("/patients/{id}")
+//    public CommonResponse<User> getPatientById(@PathVariable Integer id) {
+//        log.info("用户：查找id为{}的患者", id);
+//        return CommonResponse.createForSuccess(userService.getPatientById(id));
+//    }
+
     @PostMapping("/login")
-    public CommonResponse<String> login(@RequestBody User user) {
+    public CommonResponse<SaTokenInfo> login(@RequestBody User user) {
         log.info("用户：id为{}登录", user.getUserId());
-        String logined = userService.login(user);
-        if (logined == null) {
+        Integer loginedId = userService.login(user);
+        if (loginedId == null) {
             // 登录失败
             return CommonResponse.createForError(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode(), ResponseCode.USERNAME_OR_PASSWORD_ERROR.getDescription());
         }
-        return CommonResponse.createForSuccess(logined);
+        // sa token 登录
+        StpUtil.login(user.getUserId());
+        // 获取 Token 相关参数
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        return CommonResponse.createForSuccess(tokenInfo);
     }
 }

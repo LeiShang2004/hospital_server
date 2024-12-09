@@ -4,6 +4,7 @@ package com.sheng.hospital_server.service;
 public interface RedisService {
 
     /* department相关 */
+
     /**
      * 获取Redis中department的key
      *
@@ -22,6 +23,7 @@ public interface RedisService {
 
 
     /* specialization相关 */
+
     /**
      * 获取Redis中specialization的key
      *
@@ -40,6 +42,7 @@ public interface RedisService {
 
 
     /* title相关 */
+
     /**
      * 获取Redis中title的key
      *
@@ -58,5 +61,19 @@ public interface RedisService {
 
     String getTitleFee(Integer titleId);
 
+
+    /* 挂号相关 */
+
+    /**
+     * 获取Redis中医生预约剩余量的key
+     *
+     * @param appointmentId 挂号id
+     * @return key redis中的key
+     */
+    static String getAppointmentKey(Integer appointmentId) {
+        return "appointment:doctorId:time" + appointmentId;
+    }
+
+    
 
 }

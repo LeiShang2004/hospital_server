@@ -13,7 +13,7 @@ public interface PatientService {
 
     Patient getById(Integer patientId);
 
-
+    Boolean existsById(Integer id);
 
     List<Patient> getByUserId();
 }

@@ -1,7 +1,6 @@
 package com.sheng.hospital_server.controller;
 
 import com.sheng.hospital_server.comnon.CommonResponse;
-import com.sheng.hospital_server.pojo.Doctor;
 import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.service.PatientService;
 import jakarta.annotation.Resource;

@@ -22,4 +22,7 @@ public interface UserMapper {
 
     @Delete("delete from user where user_id = #{userId}")
     void delete(Integer userId);
+
+    @Select("select exists(select 1 from user where user_id = #{userId})")
+    Boolean existsById(Integer userId);
 }
