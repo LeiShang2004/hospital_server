@@ -1,5 +1,7 @@
 package com.sheng.hospital_server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin//跨域
+@SaCheckRole("user")
 public class UserController {
     @Resource
     private UserService userService;
 
     @PutMapping
+    @SaIgnore
     public CommonResponse<User> add(@RequestBody User user) {
         log.info("用户：添加用户");
         userService.add(user);
@@ -55,6 +59,7 @@ public class UserController {
 //    }
 
     @PostMapping("/login")
+    @SaIgnore
     public CommonResponse<SaTokenInfo> login(@RequestBody User user) {
         log.info("用户：id为{}登录", user.getUserId());
         Integer loginedId = userService.login(user);

@@ -1,5 +1,6 @@
 package com.sheng.hospital_server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Title;
 import com.sheng.hospital_server.service.TitleService;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/titles")
 @CrossOrigin//跨域
+@SaCheckRole("admin")
 public class TitleController {
     @Resource
     private TitleService titleService;

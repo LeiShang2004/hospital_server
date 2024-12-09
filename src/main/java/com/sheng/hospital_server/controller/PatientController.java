@@ -1,5 +1,6 @@
 package com.sheng.hospital_server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.service.PatientService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/patients")
 @CrossOrigin//跨域
+@SaCheckRole("user")
 public class PatientController {
     @Resource
     PatientService patientService;

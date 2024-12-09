@@ -1,5 +1,7 @@
 package com.sheng.hospital_server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admins")
 @CrossOrigin//跨域
+@SaCheckRole("admin")
 public class AdminController {
     @Resource
     private AdminService adminService;
 
     @PostMapping("/login")
+    @SaIgnore
     public CommonResponse<SaTokenInfo> login(@RequestBody Admin admin) {
         log.info("管理员{}：登录", admin.getAdminId());
         String loginedId = adminService.login(admin);
