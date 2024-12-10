@@ -24,6 +24,7 @@ public interface UserMapper {
     User getByName(String name);
 
     @Insert("insert into user(name, password, phone, balance) values(#{name}, #{password}, #{phone}, #{balance})")
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
     void add(User user);
 
     @Update("update user set name = #{name}, password = #{password}, phone = #{phone}, balance = #{balance} where user_id = #{userId}")

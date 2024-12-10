@@ -29,10 +29,10 @@ public class UserController {
 
     @PutMapping
     @SaIgnore
-    public CommonResponse<User> add(@RequestBody User user) {
+    public CommonResponse<Integer> add(@RequestBody User user) {
         log.info("用户：添加用户");
         userService.add(user);
-        return CommonResponse.createForSuccess();
+        return CommonResponse.createForSuccess(user.getUserId());
     }
 
     @DeleteMapping("/{id}")

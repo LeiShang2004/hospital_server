@@ -45,5 +45,4 @@ public class DoctorController {
         log.info("医生：查找所有医生");
         return CommonResponse.createForSuccess(doctorService.getAll());
     }
-
 }
