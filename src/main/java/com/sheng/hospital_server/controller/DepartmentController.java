@@ -1,5 +1,6 @@
 package com.sheng.hospital_server.controller;
 
+import cn.dev33.satoken.annotation.SaCheckOr;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Department;
@@ -44,12 +45,14 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
+    @SaCheckOr(role = @SaCheckRole("user"))
     public CommonResponse<Department> getById(@PathVariable Integer id) {
         log.info("科室：查找id为{}的科室", id);
         return CommonResponse.createForSuccess(departmentService.getById(id));
     }
 
     @GetMapping("/all")
+    @SaCheckOr(role = @SaCheckRole("user"))
     public CommonResponse<List<Department>> getAll() {
         log.info("科室：查找所有科室");
         return CommonResponse.createForSuccess(departmentService.getAll());

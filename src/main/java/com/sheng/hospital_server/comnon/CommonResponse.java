@@ -52,7 +52,7 @@ public class CommonResponse<T> {
 
     //请求错误，返回ResponseCode的错误信息
     public static <T> CommonResponse<T> createForError(ResponseCode responseCode) {
-        return new CommonResponse<>(ResponseCode.ERROR, null);
+        return new CommonResponse<>(responseCode, null);
     }
 
     //请求错误，指定错误信息
