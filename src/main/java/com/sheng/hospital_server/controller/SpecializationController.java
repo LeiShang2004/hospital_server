@@ -1,6 +1,8 @@
 package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
+import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Specialization;
 import com.sheng.hospital_server.service.SpecializationService;
@@ -44,19 +46,29 @@ public class SpecializationController {
     }
 
     @GetMapping("/{id}")
+    @SaIgnore
     public CommonResponse<Specialization> getById(@PathVariable Integer id) {
+        // 仅用注解无法实现
+        StpUtil.checkRoleOr("admin", "user");
         log.info("专业：查找id为{}的专业", id);
         return CommonResponse.createForSuccess(specializationService.getById(id));
     }
 
     @GetMapping("/all")
+    @SaIgnore
     public CommonResponse<List<Specialization>> getAll() {
+        // 仅用注解无法实现
+        StpUtil.checkRoleOr("admin", "user");
         log.info("专业：查找所有专业");
         return CommonResponse.createForSuccess(specializationService.getAll());
     }
 
+
     @GetMapping("/department/{departmentId}")
+    @SaIgnore
     public CommonResponse<List<Specialization>> getByDepartmentId(@PathVariable Integer departmentId) {
+        // 仅用注解无法实现
+        StpUtil.checkRoleOr("admin", "user");
         log.info("专业：查找departmentId为{}的专业", departmentId);
         return CommonResponse.createForSuccess(specializationService.getByDepartmentId(departmentId));
     }

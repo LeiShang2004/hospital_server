@@ -6,11 +6,14 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.comnon.ResponseCode;
+import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.pojo.User;
 import com.sheng.hospital_server.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户控制器
@@ -48,16 +51,27 @@ public class UserController {
 
     @GetMapping("/{id}")
     public CommonResponse<User> getById(@PathVariable Integer id) {
-        log.info("用户：查找id为{}的用户", id);
-        System.out.println(StpUtil.getTokenTimeout());
+        if (StpUtil.hasRole("admin")) {
+            log.info("用户：管理员查找id为{}的用户", id);
+        } else {
+            // 非管理员只能查找自己的信息
+            id = StpUtil.getLoginIdAsInt();
+            log.info("用户：{}用户查找", id);
+        }
         return CommonResponse.createForSuccess(userService.getById(id));
     }
 
-//    @GetMapping("/patients/{id}")
-//    public CommonResponse<User> getPatientById(@PathVariable Integer id) {
-//        log.info("用户：查找id为{}的患者", id);
-//        return CommonResponse.createForSuccess(userService.getPatientById(id));
-//    }
+    @GetMapping("/patients/{id}")
+    public CommonResponse<List<Patient>> getPatientsById(@PathVariable Integer id) {
+        if (StpUtil.hasRole("admin")) {
+            log.info("用户：管理员查找id为{}的用户绑定的患者", id);
+        } else {
+            // 非管理员只能查找自己的信息
+            id = StpUtil.getLoginIdAsInt();
+            log.info("用户：{}用户查找自己绑定的患者", id);
+        }
+        return CommonResponse.createForSuccess(userService.getPatientsById(id));
+    }
 
     @PostMapping("/login")
     @SaIgnore
@@ -73,5 +87,12 @@ public class UserController {
         // 获取 Token 相关参数
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return CommonResponse.createForSuccess(tokenInfo);
+    }
+
+    @PostMapping("/logout")
+    public CommonResponse<String> logout() {
+        log.info("用户：id为{}退出登录", StpUtil.getLoginId());
+        StpUtil.logout();
+        return CommonResponse.createForSuccess();
     }
 }

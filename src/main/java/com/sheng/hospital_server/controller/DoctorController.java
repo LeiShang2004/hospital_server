@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/doctors")
 @CrossOrigin//跨域
-@SaCheckRole("admin")
+@SaCheckRole("user")
 public class DoctorController {
     @Resource
     DoctorService doctorService;

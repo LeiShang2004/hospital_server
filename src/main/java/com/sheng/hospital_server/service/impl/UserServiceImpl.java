@@ -1,10 +1,13 @@
 package com.sheng.hospital_server.service.impl;
 
 import com.sheng.hospital_server.mapper.UserMapper;
+import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.pojo.User;
 import com.sheng.hospital_server.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,6 +38,11 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(null);
         return user;
+    }
+
+    @Override
+    public List<Patient> getPatientsById(Integer id) {
+        return userMapper.getPatientsById(id);
     }
 
     @Override

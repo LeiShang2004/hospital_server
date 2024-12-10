@@ -40,5 +40,4 @@ public class PermissionLoader implements StpInterface {
         }
         return list;
     }
-
 }

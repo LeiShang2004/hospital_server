@@ -15,5 +15,9 @@
     <table path="hospital.specialization">
       <table path="hospital.department" name="虚拟外键_sp1" from="department_id" to="department_id"/>
     </table>
+    <table path="hospital.user_patient">
+      <table path="hospital.patient" name="虚拟外键_up2" from="patient_id" to="patient_id"/>
+      <table path="hospital.user" name="虚拟外键_up1" from="user_id" to="user_id"/>
+    </table>
   </object-set>
 </data>

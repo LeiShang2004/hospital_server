@@ -1,6 +1,8 @@
 package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
+import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Department;
 import com.sheng.hospital_server.service.DepartmentService;
@@ -44,13 +46,19 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
+    @SaIgnore
     public CommonResponse<Department> getById(@PathVariable Integer id) {
+        // 仅用注解无法实现
+        StpUtil.checkRoleOr("admin", "user");
         log.info("科室：查找id为{}的科室", id);
         return CommonResponse.createForSuccess(departmentService.getById(id));
     }
 
     @GetMapping("/all")
+    @SaIgnore
     public CommonResponse<List<Department>> getAll() {
+        // 仅用注解无法实现
+        StpUtil.checkRoleOr("admin", "user");
         log.info("科室：查找所有科室");
         return CommonResponse.createForSuccess(departmentService.getAll());
     }

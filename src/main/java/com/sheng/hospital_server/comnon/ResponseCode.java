@@ -10,6 +10,8 @@ public enum ResponseCode {
     ERROR(1, "ERROR"),
     // 用户名或密码错误状态码
     USERNAME_OR_PASSWORD_ERROR(2, "USERNAME_OR_PASSWORD_ERROR"),
+    // 无此资源状态码
+    NO_RESOURCE_FOUND(3, "NO_RESOURCE_FOUND"),
 
     // 参数不合法状态码
     ARGUMENT_ILLEGAL(10, "ARGUMENT_ILLEGAL"),

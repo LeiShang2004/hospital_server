@@ -6,6 +6,7 @@ import com.sheng.hospital_server.comnon.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /**
  * 全局异常处理
@@ -13,6 +14,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalException {
+    // 拦截：无此资源异常
+    @ExceptionHandler(NoResourceFoundException.class)
+    public <T> CommonResponse<T> handlerException(NoResourceFoundException e) {
+        log.error("无此资源异常：", e);
+        return CommonResponse.createForError(ResponseCode.NO_RESOURCE_FOUND);
+    }
 
     // 拦截：未登录异常
     @ExceptionHandler(NotLoginException.class)
