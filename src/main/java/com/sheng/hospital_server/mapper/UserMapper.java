@@ -11,8 +11,6 @@ public interface UserMapper {
     @Select("select * from user where user_id = #{userId}")
     User getById(Integer userId);
 
-    @Select("select * from patient where patient_id in (select patient_id from user_patient where user_id = #{userId})")
-    List<Patient> getPatientsById(Integer userId);
 
     @Select("select * from user where user_id = #{userId} and password = #{password}")
     User login(User user);

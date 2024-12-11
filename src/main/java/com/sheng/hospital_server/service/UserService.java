@@ -15,7 +15,7 @@ public interface UserService {
 
     User getById(Integer id);
 
-    List<Patient> getPatientsById(Integer id);
+
 
     Integer login(User user);
 

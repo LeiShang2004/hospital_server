@@ -5,7 +5,16 @@ import com.sheng.hospital_server.pojo.Appointment;
 import java.util.List;
 
 public interface AppointmentService {
-    void add(Appointment appointment);
+
+    public static final Integer STATUS_PENDING_CONFIRMATION = 1;
+    public static final Integer STATUS_CONFIRMED = 2;
+    public static final Integer STATUS_CANCELLED = 3;
+    public static final Integer STATUS_COMPLETED = 4;
+
+
+    Integer add(Appointment appointment);
+
+    void cancel(Integer appointmentId);
 
     void delete(Integer appointmentId);
 

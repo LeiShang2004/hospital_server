@@ -61,17 +61,6 @@ public class UserController {
         return CommonResponse.createForSuccess(userService.getById(id));
     }
 
-    @GetMapping("/patients/{id}")
-    public CommonResponse<List<Patient>> getPatientsById(@PathVariable Integer id) {
-        if (StpUtil.hasRole("admin")) {
-            log.info("用户：管理员查找id为{}的用户绑定的患者", id);
-        } else {
-            // 非管理员只能查找自己的信息
-            id = StpUtil.getLoginIdAsInt();
-            log.info("用户：{}用户查找自己绑定的患者", id);
-        }
-        return CommonResponse.createForSuccess(userService.getPatientsById(id));
-    }
 
     @PostMapping("/login")
     @SaIgnore

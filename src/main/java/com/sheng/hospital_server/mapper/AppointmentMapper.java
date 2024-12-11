@@ -28,4 +28,6 @@ public interface AppointmentMapper {
 
     List<Appointment> getByUserId(Integer userId);
 
+    List<Appointment> getByScheduleId(Integer scheduleId);
+
 }

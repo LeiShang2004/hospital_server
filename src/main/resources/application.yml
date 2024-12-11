@@ -64,3 +64,10 @@ rsa:
 #  secretKey: sheng
 #  # 过期时间 10天
 #  expire: 864000
+
+rocketmq:
+  # NameServer 地址
+  name-server: 127.0.0.1:9876
+  # 生产者组名
+  producer:
+    group: "my-boot-producer-group"

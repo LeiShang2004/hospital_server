@@ -1,24 +1,10 @@
 package com.sheng.hospital_server;
 
-import com.aliyun.oss.*;
-import com.aliyun.oss.common.auth.CredentialsProviderFactory;
-import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
-import com.aliyun.oss.common.comm.SignVersion;
-import com.aliyun.oss.model.GeneratePresignedUrlRequest;
-import com.aliyun.oss.model.GetObjectRequest;
+import com.sheng.hospital_server.mq.MyProducer;
 import com.sheng.hospital_server.utils.RSAUtil;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.File;
-import java.net.URL;
-
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.model.GeneratePresignedUrlRequest;
-
-import java.net.URL;
-import java.util.Date;
 
 @SpringBootTest
 class HospitalServerApplicationTests {
@@ -85,6 +71,17 @@ class HospitalServerApplicationTests {
         System.out.println(encrypt);
         String decrypt = RSAUtil.decrypt(encrypt);
         System.out.println(decrypt);
+    }
+
+
+    @Resource
+    private MyProducer myProducer;
+
+    @Test
+    void mqTest() {
+        String topic = "test-topic";
+        String message = "hello, rocketmq";
+        myProducer.sendMessage(topic, message);
     }
 
 }

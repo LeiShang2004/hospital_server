@@ -51,13 +51,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Boolean existsById(Integer id) {
-        return patientMapper.existsById(id);
+    public List<Patient> getByUserId(Integer id) {
+        return patientMapper.getByUserId(id);
     }
 
     @Override
-    public List<Patient> getByUserId() {
-
-        return null;
+    public Boolean existsById(Integer id) {
+        return patientMapper.existsById(id);
     }
 }

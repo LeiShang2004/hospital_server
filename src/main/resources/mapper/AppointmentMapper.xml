@@ -3,11 +3,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sheng.hospital_server.mapper.AppointmentMapper">
 
-    <insert id="add" parameterType="com.sheng.hospital_server.pojo.Appointment">
-        insert into appointment(patient_id, doctor_id, user_id, appointment_date, appointment_time, status, information)
-        values (#{patientId}, #{doctorId}, #{userId}, #{appointmentDate}, #{appointmentTime}, #{status}, #{information})
+    <insert id="add" parameterType="com.sheng.hospital_server.pojo.Appointment"
+            useGeneratedKeys="true" keyColumn="appointment_id" keyProperty="appointmentId">
+        insert into appointment(patient_id, doctor_id, user_id, appointment_date, appointment_time, status, information,
+                                schedule_id, fee)
+        values (#{patientId}, #{doctorId}, #{userId}, #{appointmentDate}, #{appointmentTime}, #{status}, #{information},
+                #{scheduleId}, #{fee})
+        <!-- 嗯报错 -->
+        <!--       <selectKey resultType="int unsigned" keyColumn="appointment_id" keyProperty="appointmentId" order="AFTER">-->
+        <!--            select last_insert_id()-->
+        <!--        </selectKey>-->
     </insert>
 
+    <!-- 公共部分 -->
     <sql id="commonSelect">
         SELECT a.appointment_id,
                a.patient_id,
@@ -17,6 +25,8 @@
                a.appointment_time,
                a.status,
                a.information,
+               a.schedule_id,
+               a.fee,
                (SELECT CONCAT(
                                DATE_FORMAT(tb.start_time, '%H:%i'),
                                ' - ',
@@ -27,7 +37,6 @@
         FROM appointment a
     </sql>
 
-    <!-- 公共部分 -->
     <update id="update" parameterType="com.sheng.hospital_server.pojo.Appointment">
         update appointment
         set patient_id       = #{patientId},
@@ -36,7 +45,8 @@
             appointment_date = #{appointmentDate},
             appointment_time = #{appointmentTime},
             status           = #{status},
-            information      = #{information}
+            information      = #{information},
+            schedule_id      = #{scheduleId}
         where appointment_id = #{appointmentId}
     </update>
 
@@ -59,6 +69,11 @@
     <select id="getByDoctorId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
         <include refid="commonSelect"/>
         WHERE a.doctor_id = #{doctorId}
+    </select>
+
+    <select id="getByScheduleId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
+        <include refid="commonSelect"/>
+        WHERE a.schedule_id = #{scheduleId}
     </select>
 
 </mapper>

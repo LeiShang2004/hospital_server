@@ -41,11 +41,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Patient> getPatientsById(Integer id) {
-        return userMapper.getPatientsById(id);
-    }
-
-    @Override
     public Integer login(User user) {
         User logined = userMapper.login(user);
         if (logined == null) {

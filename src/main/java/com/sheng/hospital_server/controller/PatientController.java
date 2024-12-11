@@ -1,12 +1,15 @@
 package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.service.PatientService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 患者控制器
@@ -32,6 +35,18 @@ public class PatientController {
         log.info("患者：删除id为{}的患者", id);
         patientService.delete(id);
         return CommonResponse.createForSuccess();
+    }
+
+    @GetMapping("/userId/{userId}")
+    public CommonResponse<List<Patient>> getPatientsById(@PathVariable Integer userId) {
+        if (StpUtil.hasRole("admin")) {
+            log.info("用户：管理员查找id为{}的用户绑定的患者", userId);
+        } else {
+            // 非管理员只能查找自己的信息
+            userId = StpUtil.getLoginIdAsInt();
+            log.info("用户：{}用户查找自己绑定的患者", userId);
+        }
+        return CommonResponse.createForSuccess(patientService.getByUserId(userId));
     }
 
     @PostMapping()

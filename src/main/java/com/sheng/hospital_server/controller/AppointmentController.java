@@ -39,6 +39,13 @@ public class AppointmentController {
         }
     }
 
+    @PostMapping("/payment")
+    public CommonResponse<Appointment> PaymentCallback(@RequestBody Appointment appointment) {
+        log.info("挂号：更新id为{}的挂号", appointment.getAppointmentId());
+        appointmentService.update(appointment);
+        return CommonResponse.createForSuccess();
+    }
+
     @GetMapping("/{id}")
     public CommonResponse<Appointment> getById(@PathVariable Integer id) {
         log.info("挂号：查找id为{}的挂号", id);

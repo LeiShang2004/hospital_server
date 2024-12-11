@@ -22,4 +22,8 @@ public interface PatientMapper {
 
     @Select("select exists(select 1 from patient where patient_id = #{patientId})")
     Boolean existsById(Integer patientId);
+
+    // 通过用户id获取患者信息
+    @Select("select * from patient where patient_id in (select patient_id from user_patient where user_id = #{userId})")
+    List<Patient> getByUserId(Integer userId);
 }
