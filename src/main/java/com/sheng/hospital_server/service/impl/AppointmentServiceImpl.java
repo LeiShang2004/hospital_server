@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.service.impl;
 
 import com.sheng.hospital_server.mapper.AppointmentMapper;
+import com.sheng.hospital_server.mq.MyProducer;
 import com.sheng.hospital_server.pojo.Appointment;
 import com.sheng.hospital_server.pojo.Schedule;
 import com.sheng.hospital_server.service.*;
@@ -27,13 +28,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Resource
     private ScheduleService scheduleService;
 
+    @Resource
+    private MyProducer myProducer;
+
     /**
      * 添加挂号
      * 需要实现支付超时、支付失败、取消支付的取消订单释放资源的功能
-     * 1.消息队列延迟消息 为了这个单一功能引入MQ 重
+     * 1.消息队列延迟消息 选用
      * 2.定时任务 有点唐
      * 3.分布式锁
-     * 4.redis 过期回调 选用
+     * 4.redis 过期回调 不稳
      *
      * @param appointment 挂号信息
      * @return 自增主键挂号ID
@@ -57,7 +61,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         // 检查该医生该时间段是否约满
         Schedule byId = scheduleService.getById(appointment.getScheduleId());
-        if (byId.getAvailableNumber() <= 0) {
+        if (byId == null) {
+            throw new IllegalArgumentException("排班ID" + appointment.getScheduleId() + "，不存在");
+        }else if (byId.getAvailableNumber() <= 0) {
             throw new IllegalArgumentException("该医生该时间段已约满");
         }
 
@@ -69,15 +75,22 @@ public class AppointmentServiceImpl implements AppointmentService {
         // 更新排班表的可用数量 加锁占用资源 一定时间后解锁
         scheduleService.decrementAvailableNumber(appointment.getScheduleId());
 
-
+        // 发送消息队列，支付倒计时
+        myProducer.sendMessage(appointment.getAppointmentId());
 
         return appointment.getAppointmentId();
     }
 
     @Override
     public void cancel(Integer appointmentId) {
-
+        appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CANCELLED);
     }
+
+    @Override
+    public void confirm(Integer appointmentId) {
+        appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CONFIRMED);
+    }
+
 
     @Override
     public void delete(Integer appointmentId) {

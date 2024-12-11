@@ -23,4 +23,5 @@ public class Appointment {
     private Integer status;
     private String information;
     private Date createdTime;
+    private Integer fee;
 }

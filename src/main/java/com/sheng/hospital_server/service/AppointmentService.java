@@ -6,15 +6,21 @@ import java.util.List;
 
 public interface AppointmentService {
 
-    public static final Integer STATUS_PENDING_CONFIRMATION = 1;
-    public static final Integer STATUS_CONFIRMED = 2;
-    public static final Integer STATUS_CANCELLED = 3;
-    public static final Integer STATUS_COMPLETED = 4;
+    // 待确认
+    Integer STATUS_PENDING_CONFIRMATION = 1;
+    // 已确认
+    Integer STATUS_CONFIRMED = 2;
+    // 已取消
+    Integer STATUS_CANCELLED = 3;
+    // 已完成
+    Integer STATUS_COMPLETED = 4;
 
 
     Integer add(Appointment appointment);
 
     void cancel(Integer appointmentId);
+
+    void confirm(Integer appointmentId);
 
     void delete(Integer appointmentId);
 

@@ -10,7 +10,9 @@ import java.util.List;
 @Mapper
 public interface AppointmentMapper {
 
+
     void add(Appointment appointment);
+
 
     @Delete("delete from appointment where appointment_id = #{appointmentId}")
     void delete(Integer appointmentId);
