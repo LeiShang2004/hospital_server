@@ -7,6 +7,8 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 /**
  * 消息队列生产者
  * 用于发送消息
@@ -42,6 +44,6 @@ public class MyProducer {
         }
 
 
-        log.info("消息队列：发送消息时间{}", System.currentTimeMillis());
+        log.info("消息队列：发送消息时间{}", LocalDateTime.now());
     }
 }

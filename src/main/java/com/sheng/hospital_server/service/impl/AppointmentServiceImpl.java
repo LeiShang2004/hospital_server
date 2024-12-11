@@ -67,6 +67,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             throw new IllegalArgumentException("该医生该时间段已约满");
         }
 
+        // 检查是否已经挂过号
+        if (appointmentMapper.getByScheduleIdAndPatientId(appointment.getScheduleId(), appointment.getPatientId()) != null) {
+            throw new IllegalArgumentException("该患者已经挂过该时间段的号");
+        }
+
         // 设置挂号状态
         appointment.setStatus(AppointmentService.STATUS_PENDING_CONFIRMATION);
 

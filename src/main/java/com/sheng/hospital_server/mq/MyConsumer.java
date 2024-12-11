@@ -9,6 +9,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -28,7 +29,7 @@ public class MyConsumer implements RocketMQListener<String> {
     @Override
     public void onMessage(String message) {
         log.info("消息队列：接收到{}支付等待到期", message);
-        log.info("消息队列：收到消息时间{}", System.currentTimeMillis());
+        log.info("消息队列：收到消息时间{}", LocalDateTime.now());
         // 支付等待超时
 
         // 获取挂号信息
