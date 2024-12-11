@@ -11,7 +11,6 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Appointment {
 
-
     private Integer appointmentId;
     private Integer scheduleId;
     private Integer doctorId;

@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -63,12 +64,13 @@ public class AppointmentServiceImpl implements AppointmentService {
         Schedule byId = scheduleService.getById(appointment.getScheduleId());
         if (byId == null) {
             throw new IllegalArgumentException("排班ID" + appointment.getScheduleId() + "，不存在");
-        }else if (byId.getAvailableNumber() <= 0) {
+        } else if (byId.getAvailableNumber() <= 0) {
             throw new IllegalArgumentException("该医生该时间段已约满");
         }
 
         // 检查是否已经挂过号
-        if (appointmentMapper.getByScheduleIdAndPatientId(appointment.getScheduleId(), appointment.getPatientId()) != null) {
+        Appointment byScheduleIdAndPatientId = appointmentMapper.getByScheduleIdAndPatientId(appointment.getScheduleId(), appointment.getPatientId());
+        if (byScheduleIdAndPatientId != null && !Objects.equals(byScheduleIdAndPatientId.getStatus(), AppointmentService.STATUS_CONFIRMED)) {
             throw new IllegalArgumentException("该患者已经挂过该时间段的号");
         }
 
@@ -86,11 +88,21 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointment.getAppointmentId();
     }
 
+    /**
+     * 取消挂号
+     *
+     * @param appointmentId 挂号ID
+     */
     @Override
     public void cancel(Integer appointmentId) {
         appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CANCELLED);
     }
 
+    /**
+     * 确认挂号
+     *
+     * @param appointmentId 挂号ID
+     */
     @Override
     public void confirm(Integer appointmentId) {
         appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CONFIRMED);

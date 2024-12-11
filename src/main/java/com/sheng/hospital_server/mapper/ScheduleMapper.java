@@ -34,7 +34,7 @@ public interface ScheduleMapper {
     List<Schedule> getByDoctorIdAndDate(Integer doctorId, java.sql.Date startDate, java.sql.Date endDate);
 
     // 根据专业id和日期查询排班
-    @Select("select * from schedule where schedule_id = #{specializationId} and date between #{startDate} and #{endDate}")
+    @Select("select * from schedule where specialization_id = #{specializationId} and date between #{startDate} and #{endDate}")
     List<Schedule> getBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
 
     // 判断某个排班是否还有剩余号源

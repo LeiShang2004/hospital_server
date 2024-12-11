@@ -39,10 +39,15 @@ public class AppointmentController {
         }
     }
 
+    /**
+     * 支付回调
+     * 应该为第三方支付回调的接口
+     *
+     */
     @PostMapping("/payment")
     public CommonResponse<Appointment> PaymentCallback(@RequestBody Appointment appointment) {
-        log.info("挂号：更新id为{}的挂号", appointment.getAppointmentId());
-        appointmentService.update(appointment);
+        log.info("挂号：已经支付id为{}的挂号", appointment.getAppointmentId());
+        appointmentService.confirm(appointment.getAppointmentId());
         return CommonResponse.createForSuccess();
     }
 

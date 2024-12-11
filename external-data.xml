@@ -15,6 +15,7 @@
     </table>
     <table path="hospital.schedule">
       <table path="hospital.doctor" name="虚拟外键_sc1" from="doctor_id" to="doctor_id"/>
+      <table path="hospital.specialization" name="虚拟外键_sc2" from="specialization_id" to="specialization_id"/>
     </table>
     <table path="hospital.specialization">
       <table path="hospital.department" name="虚拟外键_sp1" from="department_id" to="department_id"/>
