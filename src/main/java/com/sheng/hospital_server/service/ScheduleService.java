@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.service;
 
 import com.sheng.hospital_server.pojo.Schedule;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface ScheduleService {
     List<Schedule> getByDoctorIdAndDate(Integer doctorId, java.sql.Date startDate, java.sql.Date endDate);
 
     List<Schedule> getBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
+
+    List<ScheduleInfo> getInfoBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
 
     Schedule getAvailableNumber(Integer scheduleId);
 

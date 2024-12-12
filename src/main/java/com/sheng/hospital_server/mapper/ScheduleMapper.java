@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.mapper;
 
 import com.sheng.hospital_server.pojo.Schedule;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public interface ScheduleMapper {
     // 根据专业id和日期查询排班
     @Select("select * from schedule where specialization_id = #{specializationId} and date between #{startDate} and #{endDate}")
     List<Schedule> getBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
+
+    // 根据专业id和日期查询排班 附带医生信息
+    List<ScheduleInfo> getInfoBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
 
     // 判断某个排班是否还有剩余号源
     @Select("select * from schedule where schedule_id = #{scheduleId} and available_number > 0")

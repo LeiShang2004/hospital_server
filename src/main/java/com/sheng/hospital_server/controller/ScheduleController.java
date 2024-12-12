@@ -4,6 +4,7 @@ package com.sheng.hospital_server.controller;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Schedule;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 import com.sheng.hospital_server.service.ScheduleService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -55,13 +56,13 @@ public class ScheduleController {
 
     @GetMapping("/specialization/{specializationId}")
     @SaCheckRole("user")
-    public CommonResponse<List<Schedule>> getBySpecializationId(@PathVariable Integer specializationId) {
+    public CommonResponse<List<ScheduleInfo>> getBySpecializationId(@PathVariable Integer specializationId) {
         log.info("排班：查找专业id为{}的排班", specializationId);
         // 当前sql日期
         java.util.Date date = new java.util.Date();
         java.sql.Date startDate = new java.sql.Date(date.getTime());
         // 未来第七天的日期
         java.sql.Date endDate = new java.sql.Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
-        return CommonResponse.createForSuccess(scheduleService.getBySpecializationIdAndDate(specializationId, startDate, endDate));
+        return CommonResponse.createForSuccess(scheduleService.getInfoBySpecializationIdAndDate(specializationId, startDate, endDate));
     }
 }

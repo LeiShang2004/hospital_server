@@ -2,6 +2,7 @@ package com.sheng.hospital_server.service.impl;
 
 import com.sheng.hospital_server.mapper.ScheduleMapper;
 import com.sheng.hospital_server.pojo.Schedule;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 import com.sheng.hospital_server.service.ScheduleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> getBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate) {
         return scheduleMapper.getBySpecializationIdAndDate(specializationId, startDate, endDate);
+    }
+
+    @Override
+    public List<ScheduleInfo> getInfoBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate) {
+        return scheduleMapper.getInfoBySpecializationIdAndDate(specializationId, startDate, endDate);
     }
 
     @Override
