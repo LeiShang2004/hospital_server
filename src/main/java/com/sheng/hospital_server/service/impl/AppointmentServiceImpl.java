@@ -41,7 +41,6 @@ public class AppointmentServiceImpl implements AppointmentService {
      * 4.redis 过期回调 不稳
      *
      * @param appointment 挂号信息
-     * @return 自增主键挂号ID
      */
     @Override
     public void add(Appointment appointment) {
@@ -69,8 +68,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
 
         // 检查是否已经挂过号
-        Appointment byScheduleIdAndPatientId = appointmentMapper.getByScheduleIdAndPatientId(appointment.getScheduleId(), appointment.getPatientId());
-        if (byScheduleIdAndPatientId != null && !Objects.equals(byScheduleIdAndPatientId.getStatus(), AppointmentService.STATUS_CONFIRMED)) {
+        Appointment byScheduleIdAndPatientId = appointmentMapper.getByScheduleIdAndPatientIdAndStatus(appointment.getScheduleId(), appointment.getPatientId(), AppointmentService.STATUS_CONFIRMED);
+        if (byScheduleIdAndPatientId != null) {
             throw new IllegalArgumentException("该患者已经挂过该时间段的号");
         }
 
@@ -158,5 +157,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> getByUserId(Integer userId) {
         return appointmentMapper.getByUserId(userId);
+    }
+
+    @Override
+    public List<Appointment> getAll() {
+        return appointmentMapper.getAll();
     }
 }

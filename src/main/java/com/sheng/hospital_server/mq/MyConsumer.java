@@ -30,6 +30,7 @@ public class MyConsumer implements RocketMQListener<String> {
     public void onMessage(String message) {
         log.info("消息队列：接收到{}支付等待到期", message);
         log.info("消息队列：收到消息时间{}", LocalDateTime.now());
+
         // 支付等待超时
 
         // 获取挂号信息
@@ -39,8 +40,6 @@ public class MyConsumer implements RocketMQListener<String> {
         if (Objects.equals(appointment.getStatus(), AppointmentService.STATUS_CONFIRMED)) {
             return;
         } else {
-            // 释放资源
-            scheduleService.incrementAvailableNumber(appointment.getScheduleId());
             // 取消挂号
             appointmentService.cancel(appointmentId);
         }

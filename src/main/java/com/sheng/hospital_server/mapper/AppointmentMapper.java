@@ -33,7 +33,10 @@ public interface AppointmentMapper {
 
     List<Appointment> getByScheduleId(Integer scheduleId);
 
-    @Select("select * from appointment where schedule_id = #{scheduleId} and patient_id = #{patientId}")
-    Appointment getByScheduleIdAndPatientId(Integer scheduleId, Integer patientId);
+    @Select("select * from appointment where schedule_id = #{scheduleId} and patient_id = #{patientId} and status = #{status}")
+    Appointment getByScheduleIdAndPatientIdAndStatus(Integer scheduleId, Integer patientId, Integer status);
+
+    @Select("select * from appointment")
+    List<Appointment> getAll();
 
 }

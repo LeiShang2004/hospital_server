@@ -61,11 +61,11 @@ public class AppointmentController {
     public CommonResponse<Appointment> PaymentCallback(@RequestBody Payment payment) {
         if (payment.getIsPaid()) {
             log.info("挂号：支付id为{}的挂号", payment.getAppointmentId());
-            appointmentService.cancelPayment(payment.getAppointmentId());
-            return CommonResponse.createForError("参数错误");
+            appointmentService.confirmPayment(payment.getAppointmentId());
+            return CommonResponse.createForSuccess();
         } else {
             log.info("挂号：取消支付id为{}的挂号", payment.getAppointmentId());
-            appointmentService.confirmPayment(payment.getAppointmentId());
+            appointmentService.cancelPayment(payment.getAppointmentId());
             return CommonResponse.createForSuccess();
         }
     }
@@ -115,5 +115,10 @@ public class AppointmentController {
         return CommonResponse.createForSuccess(appointmentService.getByUserId(userId));
     }
 
-
+    @GetMapping("/all")
+    @SaCheckRole("admin")
+    public CommonResponse<List<Appointment>> getAll() {
+        log.info("挂号：查找所有挂号");
+        return CommonResponse.createForSuccess(appointmentService.getAll());
+    }
 }
