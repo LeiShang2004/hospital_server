@@ -41,6 +41,9 @@ public interface ScheduleMapper {
     // 根据专业id和日期查询排班 附带医生信息
     List<ScheduleInfo> getInfoBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
 
+    // 根据医生id和日期查询排班 附带医生信息
+    List<ScheduleInfo> getInfoByDoctorIdAndDate(Integer doctorId, java.sql.Date startDate, java.sql.Date endDate);
+
     // 判断某个排班是否还有剩余号源
     @Select("select * from schedule where schedule_id = #{scheduleId} and available_number > 0")
     Schedule getAvailableNumber(Integer scheduleId);

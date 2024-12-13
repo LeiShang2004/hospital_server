@@ -7,6 +7,7 @@ import com.sheng.hospital_server.service.ScheduleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -62,6 +63,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleInfo> getInfoBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate) {
         return scheduleMapper.getInfoBySpecializationIdAndDate(specializationId, startDate, endDate);
+    }
+
+    @Override
+    public List<ScheduleInfo> getInfoByDoctorIdAndDate(Integer doctorId, Date startDate, Date endDate) {
+        return scheduleMapper.getInfoByDoctorIdAndDate(doctorId, startDate, endDate);
     }
 
     @Override

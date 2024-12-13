@@ -1,10 +1,11 @@
 package com.sheng.hospital_server;
 
-import com.sheng.hospital_server.mq.MyProducer;
+import com.sheng.hospital_server.api.GraphRagCaller;
 import com.sheng.hospital_server.utils.RSAUtil;
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.IOException;
 
 @SpringBootTest
 class HospitalServerApplicationTests {
@@ -74,14 +75,21 @@ class HospitalServerApplicationTests {
     }
 
 
-    @Resource
-    private MyProducer myProducer;
+//    @Resource
+//    private MyProducer myProducer;
+//
+//    @Test
+//    void mqTest() {
+//        String topic = "test-topic";
+//        String message = "hello, rocketmq";
+//        myProducer.sendMessage(message);
+//    }
 
     @Test
-    void mqTest() {
-        String topic = "test-topic";
-        String message = "hello, rocketmq";
-        myProducer.sendMessage(topic, message);
+    void apiTest() throws IOException {
+        String response = GraphRagCaller.send("感冒了可以吃羊肉吗");
+        System.out.println(response);
     }
+
 
 }

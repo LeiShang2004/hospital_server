@@ -5,7 +5,6 @@
     <select id="getInfoBySpecializationIdAndDate" resultType="com.sheng.hospital_server.pojo.ScheduleInfo">
         SELECT s.schedule_id,
                s.specialization_id,
-
                s.doctor_id,
                d.name AS doctorName,
                d.photo_url,
@@ -16,6 +15,23 @@
         FROM schedule s
                  INNER JOIN doctor d ON s.doctor_id = d.doctor_id
         where s.specialization_id = #{specializationId}
+          and s.date between #{startDate} and #{endDate}
+    </select>
+
+
+    <select id="getInfoByDoctorIdAndDate" resultType="com.sheng.hospital_server.pojo.ScheduleInfo">
+        SELECT s.schedule_id,
+               s.specialization_id,
+               s.doctor_id,
+               d.name AS doctorName,
+               d.photo_url,
+               d.title_id,
+               s.date,
+               s.time,
+               s.available_number
+        FROM schedule s
+                 INNER JOIN doctor d ON s.doctor_id = d.doctor_id
+        where s.doctor_id = #{doctorId}
           and s.date between #{startDate} and #{endDate}
     </select>
 </mapper>

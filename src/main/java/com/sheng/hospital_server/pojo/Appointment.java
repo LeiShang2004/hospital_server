@@ -10,7 +10,6 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Appointment {
-
     private Integer appointmentId;
     private Integer scheduleId;
     private Integer doctorId;

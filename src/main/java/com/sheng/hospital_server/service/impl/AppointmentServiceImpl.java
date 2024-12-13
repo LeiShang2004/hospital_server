@@ -44,7 +44,7 @@ public class AppointmentServiceImpl implements AppointmentService {
      * @return 自增主键挂号ID
      */
     @Override
-    public Integer add(Appointment appointment) {
+    public void add(Appointment appointment) {
         // 检查 user_id 是否存在
         if (!userService.existsById(appointment.getUserId())) {
             throw new IllegalArgumentException("用户ID" + appointment.getUserId() + "，不存在");
@@ -85,26 +85,42 @@ public class AppointmentServiceImpl implements AppointmentService {
         // 发送消息队列，支付倒计时
         myProducer.sendMessage(appointment.getAppointmentId());
 
-        return appointment.getAppointmentId();
+    }
+
+    @Override
+    public void cancel(Integer appointmentId) {
+        Appointment appointment = appointmentMapper.getById(appointmentId);
+        if (appointment == null) {
+            throw new IllegalArgumentException("挂号ID" + appointmentId + "不存在");
+        }
+
+        // 更新排班表的可用数量 解锁资源
+        scheduleService.incrementAvailableNumber(appointment.getScheduleId());
+
+        if (!Objects.equals(appointment.getStatus(), AppointmentService.STATUS_COMPLETED)) {
+            // 退款
+            appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CANCELLED);
+        }
+
     }
 
     /**
-     * 取消挂号
+     * 取消支付
      *
      * @param appointmentId 挂号ID
      */
     @Override
-    public void cancel(Integer appointmentId) {
+    public void cancelPayment(Integer appointmentId) {
         appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CANCELLED);
     }
 
     /**
-     * 确认挂号
+     * 确认支付
      *
      * @param appointmentId 挂号ID
      */
     @Override
-    public void confirm(Integer appointmentId) {
+    public void confirmPayment(Integer appointmentId) {
         appointmentMapper.updateStatus(appointmentId, AppointmentService.STATUS_CONFIRMED);
     }
 

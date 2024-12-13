@@ -26,6 +26,8 @@ public interface ScheduleService {
 
     List<ScheduleInfo> getInfoBySpecializationIdAndDate(Integer specializationId, java.sql.Date startDate, java.sql.Date endDate);
 
+    List<ScheduleInfo> getInfoByDoctorIdAndDate(Integer doctorId, java.sql.Date startDate, java.sql.Date endDate);
+
     Schedule getAvailableNumber(Integer scheduleId);
 
     void incrementAvailableNumber(Integer scheduleId);

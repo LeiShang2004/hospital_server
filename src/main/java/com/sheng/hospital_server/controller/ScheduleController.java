@@ -3,6 +3,7 @@ package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
+import com.sheng.hospital_server.pojo.DoctorDateVO;
 import com.sheng.hospital_server.pojo.Schedule;
 import com.sheng.hospital_server.pojo.ScheduleInfo;
 import com.sheng.hospital_server.service.ScheduleService;
@@ -10,6 +11,8 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -64,5 +67,15 @@ public class ScheduleController {
         // 未来第七天的日期
         java.sql.Date endDate = new java.sql.Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
         return CommonResponse.createForSuccess(scheduleService.getInfoBySpecializationIdAndDate(specializationId, startDate, endDate));
+    }
+
+    @PostMapping("/doctor")
+    @SaCheckRole("user")
+    public CommonResponse<List<ScheduleInfo>> getByDoctorId(@RequestBody DoctorDateVO doctorDateVO) {
+        log.info("排班：查找{}的排班", doctorDateVO);
+        // 将LocalDateTime转换为sql日期
+        java.sql.Date date= new java.sql.Date(doctorDateVO.getDate().getTime());
+        log.info("date:{}", date);
+        return CommonResponse.createForSuccess(scheduleService.getInfoByDoctorIdAndDate(doctorDateVO.getDoctorId(), date, date));
     }
 }

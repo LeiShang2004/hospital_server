@@ -3,6 +3,7 @@ package com.sheng.hospital_server.controller;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Appointment;
+import com.sheng.hospital_server.pojo.Payment;
 import com.sheng.hospital_server.service.AppointmentService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,11 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @PutMapping
-    public CommonResponse<Appointment> add(@RequestBody Appointment appointment) {
+    public CommonResponse<Integer> add(@RequestBody Appointment appointment) {
         log.info("挂号：添加挂号{}", appointment);
         try {
             appointmentService.add(appointment);
-            return CommonResponse.createForSuccess();
+            return CommonResponse.createForSuccess(appointment.getAppointmentId());
         } catch (IllegalArgumentException e) {
             log.error("挂号：添加挂号失败，参数错误", e);
             // 业务异常
@@ -40,15 +41,33 @@ public class AppointmentController {
     }
 
     /**
+     * 取消挂号
+     * 退回挂号费用
+     *
+     * @param appointment 挂号信息
+     */
+    @PostMapping("/cancel")
+    public CommonResponse<Appointment> cancel(@RequestBody Appointment appointment) {
+        log.info("挂号：取消id为{}的挂号", appointment.getAppointmentId());
+        appointmentService.cancel(appointment.getAppointmentId());
+        return CommonResponse.createForSuccess();
+    }
+
+    /**
      * 支付回调
      * 应该为第三方支付回调的接口
-     *
      */
     @PostMapping("/payment")
-    public CommonResponse<Appointment> PaymentCallback(@RequestBody Appointment appointment) {
-        log.info("挂号：已经支付id为{}的挂号", appointment.getAppointmentId());
-        appointmentService.confirm(appointment.getAppointmentId());
-        return CommonResponse.createForSuccess();
+    public CommonResponse<Appointment> PaymentCallback(@RequestBody Payment payment) {
+        if (payment.getIsPaid()) {
+            log.info("挂号：支付id为{}的挂号", payment.getAppointmentId());
+            appointmentService.cancelPayment(payment.getAppointmentId());
+            return CommonResponse.createForError("参数错误");
+        } else {
+            log.info("挂号：取消支付id为{}的挂号", payment.getAppointmentId());
+            appointmentService.confirmPayment(payment.getAppointmentId());
+            return CommonResponse.createForSuccess();
+        }
     }
 
     @GetMapping("/{id}")

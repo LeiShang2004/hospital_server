@@ -45,4 +45,16 @@ public class DoctorController {
         log.info("医生：查找所有医生");
         return CommonResponse.createForSuccess(doctorService.getAll());
     }
+
+    @GetMapping("/searchByName")
+    public CommonResponse<List<Doctor>> getByName(@RequestParam String name) {
+        log.info("医生：模糊搜索姓名为{}的医生", name);
+        return CommonResponse.createForSuccess(doctorService.getByName(name));
+    }
+
+    @GetMapping("/searchByIntroduction")
+    public CommonResponse<List<Doctor>> getByIntroduction(@RequestParam String introduction) {
+        log.info("医生：模糊搜索简介为{}的医生", introduction);
+        return CommonResponse.createForSuccess(doctorService.getByIntroduction(introduction));
+    }
 }

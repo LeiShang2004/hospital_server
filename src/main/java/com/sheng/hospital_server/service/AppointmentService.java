@@ -16,11 +16,13 @@ public interface AppointmentService {
     Integer STATUS_COMPLETED = 4;
 
 
-    Integer add(Appointment appointment);
+    void add(Appointment appointment);
 
     void cancel(Integer appointmentId);
 
-    void confirm(Integer appointmentId);
+    void cancelPayment(Integer appointmentId);
+
+    void confirmPayment(Integer appointmentId);
 
     void delete(Integer appointmentId);
 

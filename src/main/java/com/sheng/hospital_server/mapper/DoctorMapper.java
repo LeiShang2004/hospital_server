@@ -22,4 +22,10 @@ public interface DoctorMapper {
 
     @Select("select exists(select 1 from doctor where doctor_id = #{id})")
     Boolean existsById(Integer id);
+
+    @Select("select * from doctor where name like  CONCAT('%',#{name}, '%')")
+    List<Doctor> getByName(String name);
+
+    @Select("select * from doctor where introduction like CONCAT('%',#{introduction}, '%')")
+    List<Doctor> getByIntroduction(String introduction);
 }

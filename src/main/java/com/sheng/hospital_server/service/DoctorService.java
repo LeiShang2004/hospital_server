@@ -13,6 +13,10 @@ public interface DoctorService {
 
     List<Doctor> getAll();
 
+    List<Doctor> getByName(String name);
+
+    List<Doctor> getByIntroduction(String name);
+
     // 补全医生信息
     void complete(Doctor doctor);
 

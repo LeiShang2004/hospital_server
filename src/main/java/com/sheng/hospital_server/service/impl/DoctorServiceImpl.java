@@ -55,6 +55,16 @@ public class DoctorServiceImpl implements DoctorService {
         return doctors;
     }
 
+    @Override
+    public List<Doctor> getByName(String name) {
+        return doctorMapper.getByName(name);
+    }
+
+    @Override
+    public List<Doctor> getByIntroduction(String instruction) {
+        return doctorMapper.getByIntroduction(instruction);
+    }
+
     /**
      * 补全医生信息
      * 通过RedisService获取科室名等，补全医生信息
