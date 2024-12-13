@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Patient;
@@ -60,5 +61,13 @@ public class PatientController {
     public CommonResponse<Patient> getById(@PathVariable Integer id) {
         log.info("患者：查找id为{}的患者", id);
         return CommonResponse.createForSuccess(patientService.getById(id));
+    }
+
+    @GetMapping("/all")
+    @SaIgnore
+    @SaCheckRole("admin")
+    public CommonResponse<List<Patient>> getAll() {
+        log.info("患者：查找所有患者");
+        return CommonResponse.createForSuccess(patientService.getAll());
     }
 }

@@ -15,6 +15,10 @@ public interface PatientService {
 
     List<Patient> getByUserId(Integer id);
 
+    List<Patient> getAll();
+
     Boolean existsById(Integer id);
+
+
 
 }

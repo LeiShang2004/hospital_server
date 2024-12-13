@@ -35,4 +35,8 @@ public interface PatientMapper {
     // 通过患者身份证号获取患者id
     @Select("select patient_id from patient where hashed_id = #{hashedId} and name = #{name}")
     Integer getIdByNameAndHashedId(String name, String hashedId);
+
+    // 获取所有患者信息
+    @Select("select * from patient")
+    List<Patient> getAll();
 }
