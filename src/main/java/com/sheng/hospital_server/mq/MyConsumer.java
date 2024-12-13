@@ -39,6 +39,9 @@ public class MyConsumer implements RocketMQListener<String> {
         // 未支付才释放资源
         if (Objects.equals(appointment.getStatus(), AppointmentService.STATUS_CONFIRMED)) {
             return;
+        } else if (Objects.equals(appointment.getStatus(), AppointmentService.STATUS_CANCELLED)) {
+            // 已经取消
+            return;
         } else {
             // 取消挂号
             appointmentService.cancel(appointmentId);

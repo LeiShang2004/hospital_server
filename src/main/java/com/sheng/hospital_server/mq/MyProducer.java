@@ -43,7 +43,6 @@ public class MyProducer {
             log.error("消息队列：发送消息失败{}", e.getMessage());
         }
 
-
         log.info("消息队列：发送消息时间{}", LocalDateTime.now());
     }
 }

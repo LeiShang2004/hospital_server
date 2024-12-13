@@ -19,8 +19,8 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient add(Patient patient) {
-        // 如果数据库中没有该患者
         Integer patientId = patientMapper.getIdByNameAndHashedId(patient.getName(), patient.getHashedId());
+        // 如果数据库中没有该患者
         if (patientId == null) {
             if (!patient.getPlaintextId().isBlank()) {
                 // RSA解密
@@ -35,8 +35,10 @@ public class PatientServiceImpl implements PatientService {
                 if (cleartextId != null) {
                     patient.setCleartextId(cleartextId.substring(0, 12) + "******");
                 }
+                patientMapper.add(patient);
+            } else {
+                throw new IllegalArgumentException("身份证号不能为空");
             }
-            patientMapper.add(patient);
         } else {
             // 如果数据库中有该患者 则直接获取患者id
             patient.setPatientId(patientId);
