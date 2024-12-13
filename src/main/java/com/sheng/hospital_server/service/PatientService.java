@@ -5,7 +5,7 @@ import com.sheng.hospital_server.pojo.Patient;
 import java.util.List;
 
 public interface PatientService {
-    void add(Patient patient);
+    Patient add(Patient patient);
 
     void delete(Integer patientId);
 

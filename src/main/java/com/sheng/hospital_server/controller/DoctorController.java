@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Doctor;
 import com.sheng.hospital_server.service.DoctorService;
@@ -56,5 +57,32 @@ public class DoctorController {
     public CommonResponse<List<Doctor>> getByIntroduction(@RequestParam String introduction) {
         log.info("医生：模糊搜索简介为{}的医生", introduction);
         return CommonResponse.createForSuccess(doctorService.getByIntroduction(introduction));
+    }
+
+    @PutMapping()
+    @SaIgnore
+    @SaCheckRole("admin")
+    public CommonResponse<Doctor> add(@RequestBody Doctor doctor) {
+        log.info("医生：新增医生{}", doctor);
+        doctorService.add(doctor);
+        return CommonResponse.createForSuccess();
+    }
+
+    @DeleteMapping("/{id}")
+    @SaIgnore
+    @SaCheckRole("admin")
+    public CommonResponse<Doctor> delete(@PathVariable Integer id) {
+        log.info("医生：删除id为{}的医生", id);
+        doctorService.delete(id);
+        return CommonResponse.createForSuccess();
+    }
+
+    @PostMapping
+    @SaIgnore
+    @SaCheckRole("admin")
+    public CommonResponse<Doctor> update(@RequestBody Doctor doctor) {
+        log.info("医生：更新医生{}", doctor);
+        doctorService.update(doctor);
+        return CommonResponse.createForSuccess();
     }
 }

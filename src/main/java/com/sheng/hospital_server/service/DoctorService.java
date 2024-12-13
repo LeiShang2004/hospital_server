@@ -21,4 +21,10 @@ public interface DoctorService {
     void complete(Doctor doctor);
 
     Boolean existsById(Integer id);
+
+    void add(Doctor doctor);
+
+    void delete(Integer id);
+
+    void update(Doctor doctor);
 }

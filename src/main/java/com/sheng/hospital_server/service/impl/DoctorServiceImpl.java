@@ -83,4 +83,19 @@ public class DoctorServiceImpl implements DoctorService {
     public Boolean existsById(Integer id) {
         return doctorMapper.existsById(id);
     }
+
+    @Override
+    public void add(Doctor doctor) {
+        doctorMapper.add(doctor);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        doctorMapper.deleteById(id);
+    }
+
+    @Override
+    public void update(Doctor doctor) {
+        doctorMapper.update(doctor);
+    }
 }

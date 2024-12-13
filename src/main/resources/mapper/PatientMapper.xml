@@ -4,7 +4,8 @@
 <mapper namespace="com.sheng.hospital_server.mapper.PatientMapper">
 
 
-    <insert id="add" parameterType="com.sheng.hospital_server.pojo.Patient">
+    <insert id="add" parameterType="com.sheng.hospital_server.pojo.Patient"
+            useGeneratedKeys="true" keyColumn="patient_id" keyProperty="patientId">
         insert into patient(name, gender, birth_date, phone, information, cleartext_id, plaintext_id, hashed_id)
         values (#{name}, #{gender}, #{birthDate}, #{phone}, #{information},
                 #{cleartextId}, #{plaintextId}, #{hashedId})

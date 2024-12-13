@@ -68,7 +68,7 @@ class HospitalServerApplicationTests {
 
     @Test
     void rsaTest() {
-        String encrypt = RSAUtil.encrypt("152555202411248888");
+        String encrypt = RSAUtil.encrypt("999555202411248888");
         System.out.println(encrypt);
         String decrypt = RSAUtil.decrypt(encrypt);
         System.out.println(decrypt);

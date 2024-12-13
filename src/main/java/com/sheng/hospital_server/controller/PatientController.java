@@ -24,10 +24,10 @@ public class PatientController {
     PatientService patientService;
 
     @PutMapping()
-    public CommonResponse<Patient> add(@RequestBody Patient patient) {
+    public CommonResponse<Integer> add(@RequestBody Patient patient) {
         log.info("患者：新增患者{}", patient);
         patientService.add(patient);
-        return CommonResponse.createForSuccess();
+        return CommonResponse.createForSuccess(patient.getPatientId());
     }
 
     @DeleteMapping("/{id}")
@@ -38,7 +38,7 @@ public class PatientController {
     }
 
     @GetMapping("/userId/{userId}")
-    public CommonResponse<List<Patient>> getPatientsById(@PathVariable Integer userId) {
+    public CommonResponse<List<Patient>> getByUserId(@PathVariable Integer userId) {
         if (StpUtil.hasRole("admin")) {
             log.info("用户：管理员查找id为{}的用户绑定的患者", userId);
         } else {

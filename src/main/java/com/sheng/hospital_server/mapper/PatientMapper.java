@@ -2,6 +2,7 @@ package com.sheng.hospital_server.mapper;
 
 import com.sheng.hospital_server.pojo.Patient;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -26,4 +27,12 @@ public interface PatientMapper {
     // 通过用户id获取患者信息
     @Select("select * from patient where patient_id in (select patient_id from user_patient where user_id = #{userId})")
     List<Patient> getByUserId(Integer userId);
+
+    // 新增用户患者关系
+    @Insert("insert into user_patient(user_id, patient_id) values(#{userId}, #{patientId})")
+    void addUserPatient(Integer userId, Integer patientId);
+
+    // 通过患者身份证号获取患者id
+    @Select("select patient_id from patient where hashed_id = #{hashedId} and name = #{name}")
+    Integer getIdByNameAndHashedId(String name, String hashedId);
 }
