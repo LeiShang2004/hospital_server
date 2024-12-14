@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.service;
 
 import com.sheng.hospital_server.pojo.Doctor;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ public interface DoctorService {
 
     List<Doctor> getAll();
 
-    List<Doctor> getByName(String name);
+    List<ScheduleInfo> getByName(String name);
 
-    List<Doctor> getByIntroduction(String name);
+    List<ScheduleInfo> getByIntroduction(String name);
 
     // 补全医生信息
     void complete(Doctor doctor);

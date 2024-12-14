@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Doctor;
+import com.sheng.hospital_server.pojo.Schedule;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 import com.sheng.hospital_server.service.DoctorService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -48,14 +50,14 @@ public class DoctorController {
     }
 
     @GetMapping("/searchByName")
-    public CommonResponse<List<Doctor>> getByName(@RequestParam String name) {
-        log.info("医生：模糊搜索姓名为{}的医生", name);
+    public CommonResponse<List<ScheduleInfo>> getByName(@RequestParam String name) {
+        log.info("医生：模糊搜索姓名为{}的排班", name);
         return CommonResponse.createForSuccess(doctorService.getByName(name));
     }
 
     @GetMapping("/searchByIntroduction")
-    public CommonResponse<List<Doctor>> getByIntroduction(@RequestParam String introduction) {
-        log.info("医生：模糊搜索简介为{}的医生", introduction);
+    public CommonResponse<List<ScheduleInfo>> getByIntroduction(@RequestParam String introduction) {
+        log.info("医生：模糊搜索简介为{}的排班", introduction);
         return CommonResponse.createForSuccess(doctorService.getByIntroduction(introduction));
     }
 

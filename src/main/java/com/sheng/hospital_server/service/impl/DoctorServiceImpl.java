@@ -2,11 +2,14 @@ package com.sheng.hospital_server.service.impl;
 
 import com.sheng.hospital_server.mapper.DoctorMapper;
 import com.sheng.hospital_server.pojo.Doctor;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
 import com.sheng.hospital_server.service.DoctorService;
 import com.sheng.hospital_server.service.RedisService;
+import com.sheng.hospital_server.service.ScheduleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +19,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Resource
     private RedisService redisService;
+
+    @Resource
+    private ScheduleService scheduleService;
 
     @Override
     public Doctor getById(Integer id) {
@@ -56,13 +62,35 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Doctor> getByName(String name) {
-        return doctorMapper.getByName(name);
+    public List<ScheduleInfo> getByName(String name) {
+        List<Doctor> byName = doctorMapper.getByName(name);
+        List<ScheduleInfo> scheduleInfos = new ArrayList<>();
+        // 当前sql日期
+        java.util.Date date = new java.util.Date();
+        java.sql.Date startDate = new java.sql.Date(date.getTime() + 24 * 60 * 60 * 1000);
+        // 未来第七天的日期
+        java.sql.Date endDate = new java.sql.Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+        for (Doctor doctor : byName) {
+            List<ScheduleInfo> infoByDoctorIdAndDate = scheduleService.getInfoByDoctorIdAndDate(doctor.getDoctorId(), startDate, endDate);
+            scheduleInfos.addAll(infoByDoctorIdAndDate);
+        }
+        return scheduleInfos;
     }
 
     @Override
-    public List<Doctor> getByIntroduction(String instruction) {
-        return doctorMapper.getByIntroduction(instruction);
+    public List<ScheduleInfo> getByIntroduction(String instruction) {
+        List<Doctor> byIntroduction = doctorMapper.getByIntroduction(instruction);
+        List<ScheduleInfo> scheduleInfos = new ArrayList<>();
+        // 当前sql日期
+        java.util.Date date = new java.util.Date();
+        java.sql.Date startDate = new java.sql.Date(date.getTime() + 24 * 60 * 60 * 1000);
+        // 未来第七天的日期
+        java.sql.Date endDate = new java.sql.Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+        for (Doctor doctor : byIntroduction) {
+            List<ScheduleInfo> infoByDoctorIdAndDate = scheduleService.getInfoByDoctorIdAndDate(doctor.getDoctorId(), startDate, endDate);
+            scheduleInfos.addAll(infoByDoctorIdAndDate);
+        }
+        return scheduleInfos;
     }
 
     /**

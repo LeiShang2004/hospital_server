@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface ScheduleMapper {
 
-    @Insert("insert into schedule(doctor_id, date, time, available_number) values(#{doctorId}, #{date}, #{time}, #{availableNumber})")
+    @Insert("insert into schedule(doctor_id, date, time, available_number,specialization_id) values(#{doctorId}, #{date}, #{time}, #{availableNumber},#{specializationId})")
     void add(Schedule schedule);
 
     @Delete("delete from schedule where schedule_id = #{id}")
