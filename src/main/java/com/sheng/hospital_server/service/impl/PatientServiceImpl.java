@@ -49,6 +49,7 @@ public class PatientServiceImpl implements PatientService {
          */
         if (patientId == null) {
             patient.setCleartextId(patient.getPlaintextId().substring(0, 12) + "******");
+            patientMapper.add(patient);
         } else {
             // 如果数据库中有该患者 则直接获取患者id
             patient.setPatientId(patientId);
