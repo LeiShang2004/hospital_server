@@ -39,12 +39,19 @@
         SELECT s.schedule_id,
                s.specialization_id,
                s.doctor_id,
-               d.name AS doctorName,
+               d.name                        AS doctorName,
                d.photo_url,
                d.title_id,
                s.date,
                s.time,
-               s.available_number
+               s.available_number,
+               (SELECT CONCAT(
+                               DATE_FORMAT(tb.start_time, '%H:%i'),
+                               ' - ',
+                               DATE_FORMAT(tb.end_time, '%H:%i')
+                       ) AS appointment_time_info
+                FROM time_bucket tb
+                WHERE tb.bucket_id = s.time) AS time_info
         FROM schedule s
                  INNER JOIN doctor d ON s.doctor_id = d.doctor_id
     </select>
