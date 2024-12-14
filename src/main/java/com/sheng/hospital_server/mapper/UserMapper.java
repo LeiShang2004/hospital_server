@@ -12,7 +12,7 @@ public interface UserMapper {
     User getById(Integer userId);
 
 
-    @Select("select * from user where user_id = #{userId} and password = #{password}")
+    @Select("select * from user where phone = #{phone} and password = #{password}")
     User login(User user);
 
     @Select("select * from user ")
