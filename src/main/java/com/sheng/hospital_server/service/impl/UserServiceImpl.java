@@ -1,13 +1,10 @@
 package com.sheng.hospital_server.service.impl;
 
 import com.sheng.hospital_server.mapper.UserMapper;
-import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.pojo.User;
 import com.sheng.hospital_server.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,7 +14,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User user) {
-        userMapper.add(user);
+        try {
+            userMapper.add(user);
+        } catch (Exception e) {
+            throw new RuntimeException("该手机号已被注册");
+        }
     }
 
     @Override

@@ -6,14 +6,11 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.comnon.ResponseCode;
-import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.pojo.User;
 import com.sheng.hospital_server.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 用户控制器
@@ -65,14 +62,14 @@ public class UserController {
     @PostMapping("/login")
     @SaIgnore
     public CommonResponse<SaTokenInfo> login(@RequestBody User user) {
-        log.info("用户：id为{}登录", user.getUserId());
+        log.info("用户：手机号为{}登录", user.getPhone());
         Integer loginedId = userService.login(user);
         if (loginedId == null) {
             // 登录失败
             return CommonResponse.createForError(ResponseCode.USERNAME_OR_PASSWORD_ERROR.getCode(), ResponseCode.USERNAME_OR_PASSWORD_ERROR.getDescription());
         }
         // sa token 登录
-        StpUtil.login(user.getUserId());
+        StpUtil.login(loginedId);
         // 获取 Token 相关参数
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return CommonResponse.createForSuccess(tokenInfo);
