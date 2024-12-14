@@ -12,6 +12,6 @@ public class Schedule {
     private Integer specializationId;
     private Integer doctorId;
     private java.sql.Date date;
-    private String time;
+    private Integer time;
     private Integer availableNumber;
 }

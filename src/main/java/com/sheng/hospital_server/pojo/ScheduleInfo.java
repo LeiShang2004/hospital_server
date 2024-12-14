@@ -15,7 +15,7 @@ public class ScheduleInfo {
     private String photoUrl;
     private String titleId;
     private java.sql.Date date;
-    private String time;
+    private Integer time;
     private String timeInfo;
     private Integer availableNumber;
 }
