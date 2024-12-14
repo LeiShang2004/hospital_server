@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -15,10 +15,12 @@ public class AppointmentInfo {
     private String doctorName;
     private String userName;
     private String patientName;
+    private String specializationName;
     private Date appointmentDate;
     private Integer appointmentTime;
     private String appointmentTimeInfo;
     private Integer status;
     private Integer fee;
-    private Time createdTime;
+    private Date createdTime;
+    private Timestamp createdTimeStamp;
 }

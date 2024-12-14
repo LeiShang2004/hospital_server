@@ -62,11 +62,13 @@
                d.name                                    AS doctor_name,
                u.name                                    AS user_name,
                p.name                                    AS patient_name,
+               s.name                                    AS specialization_name,
                a.appointment_date,
                a.appointment_time,
                a.status,
                a.fee,
                a.created_time,
+               a.created_time                            AS created_time_stamp,
                (SELECT CONCAT(
                                DATE_FORMAT(tb.start_time, '%H:%i'),
                                ' - ',
@@ -81,6 +83,8 @@
                  INNER JOIN user u ON a.user_id = u.user_id
             -- 关联医生表获取医生名字
                  INNER JOIN doctor d ON a.doctor_id = d.doctor_id
+            -- 关联专业表获取专业名字
+                 INNER JOIN specialization s ON d.specialization_id = s.specialization_id
         WHERE a.user_id = #{userId}
     </select>
 
@@ -104,11 +108,13 @@
                d.name                                    AS doctor_name,
                u.name                                    AS user_name,
                p.name                                    AS patient_name,
+               s.name                                    AS specialization_name,
                a.appointment_date,
                a.appointment_time,
                a.status,
                a.fee,
                a.created_time,
+               a.created_time                            AS created_time_stamp,
                (SELECT CONCAT(
                                DATE_FORMAT(tb.start_time, '%H:%i'),
                                ' - ',
@@ -123,6 +129,8 @@
                  INNER JOIN user u ON a.user_id = u.user_id
             -- 关联医生表获取医生名字
                  INNER JOIN doctor d ON a.doctor_id = d.doctor_id
+            -- 关联专业表获取专业名字
+                 INNER JOIN specialization s ON d.specialization_id = s.specialization_id
     </select>
 
 </mapper>
