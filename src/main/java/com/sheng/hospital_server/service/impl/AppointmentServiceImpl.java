@@ -156,7 +156,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getByUserId(Integer userId) {
+    public List<AppointmentInfo> getByUserId(Integer userId) {
         return appointmentMapper.getByUserId(userId);
     }
 

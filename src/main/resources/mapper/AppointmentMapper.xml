@@ -57,8 +57,30 @@
     </select>
 
 
-    <select id="getByUserId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
-        <include refid="commonSelect"/>
+    <select id="getByUserId" parameterType="int" resultType="com.sheng.hospital_server.pojo.AppointmentInfo">
+        SELECT a.appointment_id,
+               d.name                                    AS doctor_name,
+               u.name                                    AS user_name,
+               p.name                                    AS patient_name,
+               a.appointment_date,
+               a.appointment_time,
+               a.status,
+               a.fee,
+               a.created_time,
+               (SELECT CONCAT(
+                               DATE_FORMAT(tb.start_time, '%H:%i'),
+                               ' - ',
+                               DATE_FORMAT(tb.end_time, '%H:%i')
+                       ) AS appointment_time_info
+                FROM time_bucket tb
+                WHERE tb.bucket_id = a.appointment_time) AS appointment_time_info
+        FROM appointment a
+                 -- 关联患者表获取患者名字
+                 INNER JOIN patient p ON a.patient_id = p.patient_id
+            -- 关联用户表获取用户名字
+                 INNER JOIN user u ON a.user_id = u.user_id
+            -- 关联医生表获取医生名字
+                 INNER JOIN doctor d ON a.doctor_id = d.doctor_id
         WHERE a.user_id = #{userId}
     </select>
 

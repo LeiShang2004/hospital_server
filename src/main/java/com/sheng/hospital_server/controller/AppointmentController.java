@@ -111,7 +111,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/user/{userId}")
-    public CommonResponse<List<Appointment>> getByUserId(@PathVariable Integer userId) {
+    public CommonResponse<List<AppointmentInfo>> getByUserId(@PathVariable Integer userId) {
         log.info("挂号：查找用户id为{}的挂号", userId);
         return CommonResponse.createForSuccess(appointmentService.getByUserId(userId));
     }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +21,6 @@ public class Appointment {
     private String appointmentTimeInfo;
     private Integer status;
     private String information;
-    private Date createdTime;
+    private Time createdTime;
     private Integer fee;
 }
