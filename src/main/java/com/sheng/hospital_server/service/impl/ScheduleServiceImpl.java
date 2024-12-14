@@ -36,6 +36,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public List<ScheduleInfo> getAllInfo() {
+        return scheduleMapper.getAllInfo();
+    }
+
+    @Override
     public List<Schedule> getByDoctorId(Integer doctorId) {
         return scheduleMapper.getByDoctorId(doctorId);
     }

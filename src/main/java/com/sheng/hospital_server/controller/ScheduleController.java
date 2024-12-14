@@ -11,8 +11,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -57,6 +55,13 @@ public class ScheduleController {
         return CommonResponse.createForSuccess(scheduleService.getById(id));
     }
 
+    @GetMapping("/all")
+    @SaCheckRole("admin")
+    public CommonResponse<List<ScheduleInfo>> getAllInfo() {
+        log.info("排班：查找所有排班");
+        return CommonResponse.createForSuccess(scheduleService.getAllInfo());
+    }
+
     @GetMapping("/specialization/{specializationId}")
     @SaCheckRole("user")
     public CommonResponse<List<ScheduleInfo>> getBySpecializationId(@PathVariable Integer specializationId) {
@@ -74,7 +79,7 @@ public class ScheduleController {
     public CommonResponse<List<ScheduleInfo>> getByDoctorId(@RequestBody DoctorDateVO doctorDateVO) {
         log.info("排班：查找{}的排班", doctorDateVO);
         // 将LocalDateTime转换为sql日期
-        java.sql.Date date= new java.sql.Date(doctorDateVO.getDate().getTime());
+        java.sql.Date date = new java.sql.Date(doctorDateVO.getDate().getTime());
         log.info("date:{}", date);
         return CommonResponse.createForSuccess(scheduleService.getInfoByDoctorIdAndDate(doctorDateVO.getDoctorId(), date, date));
     }

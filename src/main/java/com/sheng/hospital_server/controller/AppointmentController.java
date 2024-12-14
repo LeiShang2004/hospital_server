@@ -118,7 +118,7 @@ public class AppointmentController {
 
     @GetMapping("/all")
     @SaCheckRole("admin")
-    public CommonResponse<List<AppointmentInfo>> getAll() {
+    public CommonResponse<List<AppointmentInfo>> getAllInfo() {
         log.info("挂号：查找所有挂号");
         return CommonResponse.createForSuccess(appointmentService.getAll());
     }

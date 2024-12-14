@@ -14,6 +14,8 @@ public interface ScheduleService {
 
     Schedule getById(Integer id);
 
+    List<ScheduleInfo> getAllInfo();
+
     List<Schedule> getByDoctorId(Integer doctorId);
 
     List<Schedule> getByDate(java.sql.Date startDate, java.sql.Date endDate);
