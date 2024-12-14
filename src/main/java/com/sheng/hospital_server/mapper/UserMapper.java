@@ -1,6 +1,5 @@
 package com.sheng.hospital_server.mapper;
 
-import com.sheng.hospital_server.pojo.Patient;
 import com.sheng.hospital_server.pojo.User;
 import org.apache.ibatis.annotations.*;
 
@@ -15,8 +14,8 @@ public interface UserMapper {
     @Select("select * from user where phone = #{phone} and password = #{password}")
     User login(User user);
 
-    @Select("select * from user ")
-    User getAll();
+    @Select("select user_id,name,phone from user")
+    List<User> getAll();
 
     @Select("select * from patient where name = #{name}")
     User getByName(String name);

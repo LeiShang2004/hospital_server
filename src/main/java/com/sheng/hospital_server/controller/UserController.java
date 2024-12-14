@@ -12,6 +12,8 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 用户控制器
  */
@@ -56,6 +58,13 @@ public class UserController {
             log.info("用户：{}用户查找", id);
         }
         return CommonResponse.createForSuccess(userService.getById(id));
+    }
+
+    @GetMapping("/all")
+    @SaCheckRole("admin")
+    public CommonResponse<List<User>> getAll() {
+        log.info("用户：查找所有用户");
+        return CommonResponse.createForSuccess(userService.getAll());
     }
 
 
