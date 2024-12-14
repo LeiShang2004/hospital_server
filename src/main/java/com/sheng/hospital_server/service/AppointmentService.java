@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.service;
 
 import com.sheng.hospital_server.pojo.Appointment;
+import com.sheng.hospital_server.pojo.AppointmentInfo;
 
 import java.util.List;
 
@@ -38,5 +39,5 @@ public interface AppointmentService {
 
     List<Appointment> getByUserId(Integer userId);
 
-    List<Appointment> getAll();
+    List<AppointmentInfo> getAll();
 }

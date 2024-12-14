@@ -64,7 +64,6 @@ public class PatientController {
     }
 
     @GetMapping("/all")
-    @SaIgnore
     @SaCheckRole("admin")
     public CommonResponse<List<Patient>> getAll() {
         log.info("患者：查找所有患者");

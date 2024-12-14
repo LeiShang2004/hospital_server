@@ -3,6 +3,7 @@ package com.sheng.hospital_server.service.impl;
 import com.sheng.hospital_server.mapper.AppointmentMapper;
 import com.sheng.hospital_server.mq.MyProducer;
 import com.sheng.hospital_server.pojo.Appointment;
+import com.sheng.hospital_server.pojo.AppointmentInfo;
 import com.sheng.hospital_server.pojo.Schedule;
 import com.sheng.hospital_server.service.*;
 import jakarta.annotation.Resource;
@@ -160,7 +161,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getAll() {
+    public List<AppointmentInfo> getAll() {
         return appointmentMapper.getAll();
     }
 }

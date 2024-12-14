@@ -60,7 +60,6 @@ public class DoctorController {
     }
 
     @PutMapping()
-    @SaIgnore
     @SaCheckRole("admin")
     public CommonResponse<Doctor> add(@RequestBody Doctor doctor) {
         log.info("医生：新增医生{}", doctor);
@@ -69,7 +68,6 @@ public class DoctorController {
     }
 
     @DeleteMapping("/{id}")
-    @SaIgnore
     @SaCheckRole("admin")
     public CommonResponse<Doctor> delete(@PathVariable Integer id) {
         log.info("医生：删除id为{}的医生", id);
@@ -78,7 +76,6 @@ public class DoctorController {
     }
 
     @PostMapping
-    @SaIgnore
     @SaCheckRole("admin")
     public CommonResponse<Doctor> update(@RequestBody Doctor doctor) {
         log.info("医生：更新医生{}", doctor);

@@ -1,6 +1,7 @@
 package com.sheng.hospital_server.mapper;
 
 import com.sheng.hospital_server.pojo.Appointment;
+import com.sheng.hospital_server.pojo.AppointmentInfo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -36,7 +37,5 @@ public interface AppointmentMapper {
     @Select("select * from appointment where schedule_id = #{scheduleId} and patient_id = #{patientId} and status = #{status}")
     Appointment getByScheduleIdAndPatientIdAndStatus(Integer scheduleId, Integer patientId, Integer status);
 
-    @Select("select * from appointment")
-    List<Appointment> getAll();
-
+    List<AppointmentInfo> getAll();
 }

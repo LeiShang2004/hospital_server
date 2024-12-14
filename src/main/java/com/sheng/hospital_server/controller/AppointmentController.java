@@ -3,6 +3,7 @@ package com.sheng.hospital_server.controller;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Appointment;
+import com.sheng.hospital_server.pojo.AppointmentInfo;
 import com.sheng.hospital_server.pojo.Payment;
 import com.sheng.hospital_server.service.AppointmentService;
 import jakarta.annotation.Resource;
@@ -117,7 +118,7 @@ public class AppointmentController {
 
     @GetMapping("/all")
     @SaCheckRole("admin")
-    public CommonResponse<List<Appointment>> getAll() {
+    public CommonResponse<List<AppointmentInfo>> getAll() {
         log.info("挂号：查找所有挂号");
         return CommonResponse.createForSuccess(appointmentService.getAll());
     }
