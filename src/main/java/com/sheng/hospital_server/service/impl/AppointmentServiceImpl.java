@@ -164,4 +164,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentInfo> getAll() {
         return appointmentMapper.getAll();
     }
+
+    @Override
+    public void softDelete(Integer appointmentId) {
+        appointmentMapper.softDelete(appointmentId);
+    }
 }

@@ -40,4 +40,6 @@ public interface AppointmentService {
     List<AppointmentInfo> getByUserId(Integer userId);
 
     List<AppointmentInfo> getAll();
+
+    void softDelete(Integer appointmentId);
 }

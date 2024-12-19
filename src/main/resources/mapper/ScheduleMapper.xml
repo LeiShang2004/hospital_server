@@ -9,6 +9,7 @@
                d.name AS doctorName,
                d.photo_url,
                d.title_id,
+               d.introduction,
                s.date,
                s.time,
                s.available_number

@@ -18,4 +18,5 @@ public class ScheduleInfo {
     private Integer time;
     private String timeInfo;
     private Integer availableNumber;
+    private String introduction;
 }

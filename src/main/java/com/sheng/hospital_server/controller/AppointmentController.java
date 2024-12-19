@@ -122,4 +122,11 @@ public class AppointmentController {
         log.info("挂号：查找所有挂号");
         return CommonResponse.createForSuccess(appointmentService.getAll());
     }
+
+    @DeleteMapping("/sofDelete/{id}")
+    public CommonResponse<Appointment> softDelete(@PathVariable Integer id) {
+        log.info("挂号：软删除id为{}的挂号", id);
+        appointmentService.softDelete(id);
+        return CommonResponse.createForSuccess();
+    }
 }

@@ -53,7 +53,7 @@
 
     <select id="getById" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
         <include refid="commonSelect"/>
-        WHERE a.appointment_id = #{appointmentId}
+        WHERE a.appointment_id = #{appointmentId} and is_deleted = False
     </select>
 
 
@@ -85,22 +85,22 @@
                  INNER JOIN doctor d ON a.doctor_id = d.doctor_id
             -- 关联专业表获取专业名字
                  INNER JOIN specialization s ON d.specialization_id = s.specialization_id
-        WHERE a.user_id = #{userId}
+        WHERE a.user_id = #{userId} and a.is_deleted = False
     </select>
 
     <select id="getByPatientId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
         <include refid="commonSelect"/>
-        WHERE a.patient_id = #{patientId}
+        WHERE a.patient_id = #{patientId} and a.is_deleted = False
     </select>
 
     <select id="getByDoctorId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
         <include refid="commonSelect"/>
-        WHERE a.doctor_id = #{doctorId}
+        WHERE a.doctor_id = #{doctorId} and a.is_deleted = False
     </select>
 
     <select id="getByScheduleId" parameterType="int" resultType="com.sheng.hospital_server.pojo.Appointment">
         <include refid="commonSelect"/>
-        WHERE a.schedule_id = #{scheduleId}
+        WHERE a.schedule_id = #{scheduleId} and a.is_deleted = False
     </select>
 
     <select id="getAll" resultType="com.sheng.hospital_server.pojo.AppointmentInfo">
@@ -131,6 +131,7 @@
                  INNER JOIN doctor d ON a.doctor_id = d.doctor_id
             -- 关联专业表获取专业名字
                  INNER JOIN specialization s ON d.specialization_id = s.specialization_id
+        WHERE a.is_deleted = False
     </select>
 
 </mapper>
