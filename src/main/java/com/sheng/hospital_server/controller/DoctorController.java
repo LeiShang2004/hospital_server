@@ -1,16 +1,15 @@
 package com.sheng.hospital_server.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
-import cn.dev33.satoken.annotation.SaIgnore;
 import com.sheng.hospital_server.comnon.CommonResponse;
 import com.sheng.hospital_server.pojo.Doctor;
-import com.sheng.hospital_server.pojo.Schedule;
 import com.sheng.hospital_server.pojo.ScheduleInfo;
 import com.sheng.hospital_server.service.DoctorService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -56,14 +55,14 @@ public class DoctorController {
     }
 
     @GetMapping("/searchByIntroduction")
-    public CommonResponse<List<ScheduleInfo>> getByIntroduction(@RequestParam String introduction) {
+    public CommonResponse<List<ScheduleInfo>> getByIntroduction(@RequestParam String introduction) throws IOException {
         log.info("医生：模糊搜索简介为{}的排班", introduction);
         return CommonResponse.createForSuccess(doctorService.getByIntroduction(introduction));
     }
 
     @PutMapping()
     @SaCheckRole("admin")
-    public CommonResponse<Doctor> add(@RequestBody Doctor doctor) {
+    public CommonResponse<Doctor> add(@RequestBody Doctor doctor) throws IOException {
         log.info("医生：新增医生{}", doctor);
         doctorService.add(doctor);
         return CommonResponse.createForSuccess();
@@ -71,7 +70,7 @@ public class DoctorController {
 
     @DeleteMapping("/{id}")
     @SaCheckRole("admin")
-    public CommonResponse<Doctor> delete(@PathVariable Integer id) {
+    public CommonResponse<Doctor> delete(@PathVariable Integer id) throws IOException {
         log.info("医生：删除id为{}的医生", id);
         doctorService.delete(id);
         return CommonResponse.createForSuccess();
@@ -79,7 +78,7 @@ public class DoctorController {
 
     @PostMapping
     @SaCheckRole("admin")
-    public CommonResponse<Doctor> update(@RequestBody Doctor doctor) {
+    public CommonResponse<Doctor> update(@RequestBody Doctor doctor) throws IOException {
         log.info("医生：更新医生{}", doctor);
         doctorService.update(doctor);
         return CommonResponse.createForSuccess();

@@ -29,6 +29,7 @@ public interface DoctorMapper {
     List<Doctor> getByIntroduction(String introduction);
 
     @Insert("insert into doctor(name, gender,department_id, specialization_id, title_id,photo_url,created_time,updated_time,introduction) values(#{name}, #{gender}, #{departmentId},#{specializationId}, #{titleId}, #{photoUrl}, NOW(), NOW(),#{introduction})")
+    @Options(useGeneratedKeys = true, keyProperty = "doctorId")
     void add(Doctor doctor);
 
     @Delete("delete from doctor where doctor_id = #{id}")

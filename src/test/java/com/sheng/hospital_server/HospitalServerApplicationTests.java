@@ -1,11 +1,20 @@
 package com.sheng.hospital_server;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.elasticsearch.core.IndexResponse;
 import com.sheng.hospital_server.api.GraphRagCaller;
+import com.sheng.hospital_server.pojo.Doctor;
+import com.sheng.hospital_server.pojo.DoctorES;
+import com.sheng.hospital_server.pojo.ScheduleInfo;
+import com.sheng.hospital_server.service.DoctorService;
 import com.sheng.hospital_server.utils.RSAUtil;
+import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.List;
 
 @SpringBootTest
 class HospitalServerApplicationTests {
@@ -89,6 +98,50 @@ class HospitalServerApplicationTests {
     void apiTest() throws IOException {
         String response = GraphRagCaller.send("感冒了可以吃羊肉吗");
         System.out.println(response);
+    }
+
+
+    @Resource
+    private DoctorService doctorService;
+
+    @Test
+    void esTest() throws IOException {
+//        DoctorES doctorES = new DoctorES();
+//        doctorES.setId(1);
+//        doctorES.setIntroduction("我是大师医生无敌张栩嘉");
+//        elasticsearchTemplate.save(doctorES);
+        List<ScheduleInfo> 大师 = doctorService.getByIntroduction("大师");
+        System.out.println(大师);
+        System.out.println("===================================");
+        List<ScheduleInfo> 臭嗨 = doctorService.getByIntroduction("臭嗨");
+        System.out.println(臭嗨);
+
+    }
+
+
+    @Resource
+    private ElasticsearchClient elasticClient;
+
+
+    @Test
+    void toES() {
+        List<Doctor> all = doctorService.getAll();
+        for (Doctor doctor : all) {
+            try {
+                DoctorES doctorES = new DoctorES();
+                doctorES.setId(doctor.getDoctorId());
+                doctorES.setIntroduction(doctor.getIntroduction());
+                IndexRequest<DoctorES> indexRequest = IndexRequest.of(b -> b
+                        .index("doctor")
+                        .id(doctor.getDoctorId().toString())
+                        .document(doctorES));
+                IndexResponse index = elasticClient.index(indexRequest);
+                System.out.println(index);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 

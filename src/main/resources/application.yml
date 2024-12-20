@@ -18,11 +18,16 @@ spring:
       #总上传文件最大大小
       max-request-size: 100MB
 
-  # Redis配置
+  # Elasticsearch配置 牛魔的为啥不再data下面
+  elasticsearch:
+    uris: "http://localhost:9200"
+    socket-timeout: "10s"
   data:
+    # Redis配置
     redis:
       host: localhost
       port: 6379
+
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
@@ -44,7 +49,7 @@ sa-token:
 mybatis:
   configuration:
     #日志输出到控制台 ！！！！！！！！
-    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰命名
     map-underscore-to-camel-case: true
 
