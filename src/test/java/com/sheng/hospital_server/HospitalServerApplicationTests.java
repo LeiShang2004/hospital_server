@@ -77,10 +77,10 @@ class HospitalServerApplicationTests {
 
     @Test
     void rsaTest() {
-//        String encrypt = RSAUtil.encrypt("无敌人瑞");
-//        System.out.println(encrypt);
-        String decrypt = RSAUtil.decrypt("TmDIsqXslamvZtEQ1Z6yNVPyffqqU+UKSSPP9+5nZ5cUZkGTM1jIXVGlzEOE1WmcUvZSNPvbcqP8CGjNnwRVn4dfzoyK7R8rhqQWYRA0Lz/Q1sJa2iZTID9qOWjaRIYli3HMEgwfje7ONJYCBzG7ECvAJjADtiEwWOLwsMJdpCM=");
-        System.out.println(decrypt);
+        String encrypt = RSAUtil.encrypt("152601200488881188");
+        System.out.println(encrypt);
+//        String decrypt = RSAUtil.decrypt("TmDIsqXslamvZtEQ1Z6yNVPyffqqU+UKSSPP9+5nZ5cUZkGTM1jIXVGlzEOE1WmcUvZSNPvbcqP8CGjNnwRVn4dfzoyK7R8rhqQWYRA0Lz/Q1sJa2iZTID9qOWjaRIYli3HMEgwfje7ONJYCBzG7ECvAJjADtiEwWOLwsMJdpCM=");
+//        System.out.println(decrypt);
     }
 
 
